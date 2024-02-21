@@ -17,34 +17,33 @@ Images are hosted, please use the srcs from here and not from your machine
 
 
 ## stationery donation
-- books and stationery **https://ibb.co/fQJ2ydc**
-- student stationery donation1 **https://ibb.co/gz0J70C**
-- student stationery donation2 **https://ibb.co/gz0J70C**
-- student stationery donation3 **https://ibb.co/hHJZZmS**
-- stand with kolhapur banner **https://ibb.co/RcZtFkw**
+- books and stationery **https://i.ibb.co/HXZVbTJ/8.png**
+- student stationery donation1 **https://i.ibb.co/ChjQtjF/11.png**
+- student stationery donation3 **https://i.ibb.co/RPkBBDq/13.png**
+- stand with kolhapur banner **https://i.ibb.co/YhYJCFs/14.png**
 
 
 ## memorables 
-- memorable1 **https://ibb.co/yVJNQCF**
+- memorable1 **https://i.ibb.co/SJp63gw/15.png**
 
 ## children donations 
-- children1 **https://ibb.co/Pz44Wtd**
-- children2 **https://ibb.co/8Xr437W**
-- children3 **https://ibb.co/THSBkwt**
-- children4 **https://ibb.co/mRHqYTD**
-- children5 **https://ibb.co/mNC4fyL**
-- children6 **https://ibb.co/V3LHLHQ**
-- children7 **https://ibb.co/XV5RvV5**
-- children8 **https://ibb.co/5KQf5mf**
+- children1 **https://i.ibb.co/NnppN7M/16.png**
+- children2 **https://i.ibb.co/6NHJhW3/17.png**
+- children3 **https://i.ibb.co/FBMbKhz/DSC-3775.jpg**
+- children4 **https://i.ibb.co/YNtkKQR/DSC-3924.jpg**
+- children5 **https://i.ibb.co/RjpcR6x/DSC-3997.jpg**
+- children6 **https://i.ibb.co/521Y1Yn/DSC-4009.jpg**
+- children7 **https://i.ibb.co/yVkjbVk/DSC-4010.jpg**
+- children8 **https://i.ibb.co/rdB1ZY1/DSC-4014.jpg**
 
 ## school
-- school1 **https://ibb.co/5KSLPC4**
-- school2 **https://ibb.co/RcbcNsT**
+- school1 **https://i.ibb.co/kmwXtzB/DSC-3716.jpg**
+- school2 **https://i.ibb.co/PgjgMPG/DSC-3717.jpg**
 
 ## logo and trustee
-- logo **https://ibb.co/MZcm7Hd**
-- trustee **https://ibb.co/gM7W8wd**
+- logo **https://i.ibb.co/fqksHWJ/SPCT-Logo.png**
+- trustee **https://i.ibb.co/qMng89C/trustee-login.png**
 
 ## others 
-- others1 **https://ibb.co/867S49n**
-- others2 **https://ibb.co/RT0V3T7**
+- others1 **https://i.ibb.co/bzK8RXj/18.png**
+- others2 **https://i.ibb.co/jkM1ykH/19.png**
