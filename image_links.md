@@ -1,8 +1,8 @@
 Images are hosted, please use the srcs from here and not from your machine 
 
 ## bagbacks 
-- bags1 **https://ibb.co/4tmP2H3**
-- bags2 **https://ibb.co/4tmP2H3**
+- bags1 **https://i.ibb.co/C81h6fD/3.png**
+- bags2 **https://i.ibb.co/C81h6fD/3.png**
 
 
 ## bagbacks large view
