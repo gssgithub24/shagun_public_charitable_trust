@@ -20,16 +20,16 @@ const SignUp = () => {
         if (firstName.length < 2) {
             setFirstNameError('First name must be at least 2 characters.');
             valid = false;
-          } else {
+        } else {
             setFirstNameError('');
-          }
-          if (lastName.length < 4) {
+        }
+        if (lastName.length < 4) {
             setLastNameError('Last name must be at least 4 characters.');
             valid = false;
-          } else {
+        } else {
             setLastNameError('');
-          }
-      
+        }
+
         //Check Email
         if (!validateEmail(email)) {
             setEmailError('Invalid email address.');
@@ -103,34 +103,14 @@ const SignUp = () => {
 
     return (
         <>
-            <form action="">
+            <form action="" className='overflow-x-hidden'>
                 <div className="h-screen flex flex-col items-center justify-center">
                     <h1 className="md:text-5xl text-3xl font-bold text-black mt-20 mb-4">Create Account</h1>
                     <br />
-                    {/* <div className="flex xl:flex-row flex-col justify-between items-center md:w-3/5 w-full">
-                        <input
-                            className="xl:w-1/2 md:w-full w-[85%] py-1 xl:mr-2 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
-                            type="text"
-                            placeholder="First Name"
-                            minLength={2}
-                            value={firstName}
-                            onChange={handleFirstName}
-                            required
-                        />
-                        <input
-                            className="xl:w-1/2 md:w-full w-[85%] py-1 xl:ml-2 mt-6 xl:mt-0 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
-                            type="text"
-                            placeholder="Last Name"
-                            minLength={4}
-                            value={lastName}
-                            onChange={handleLastName}
-                            required
-                        />
-                    </div> */}
-                    <div className="flex xl:flex-row flex-col justify-between items-center md:w-3/5 w-full">
+                    <div className="flex xl:flex-row flex-col xl:justify-between justify-center items-center md:w-3/5 w-full">
                         <div className='w-full ml-[15%] md:ml-0 flex flex-col justify-center'>
                         <input
-                            className="xl:w-[100%] md:w-full w-[85%] py-1 xl:mr-2 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
+                            className="xl:w-[97%] md:w-full w-[85%] py-1 xl:mr-2 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
                             type="text"
                             placeholder="First Name"
                             minLength={2}
@@ -139,11 +119,11 @@ const SignUp = () => {
                             required
                         />
                         {(firstNameError) && <p className="text-red-500 text-xs mt-0 ">{firstNameError}</p>}
-                        {/* ml-6 px-1 mr-auto md:ml-[146px] xl:ml-[252px] */}
+                        
                         </div>
                         <div className='w-full ml-[15%] md:ml-0 flex flex-col justify-center'>
                         <input
-                            className="xl:w-[100%] md:w-full w-[85%] py-1 xl:ml-2 mt-6 xl:mt-0 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
+                            className="xl:w-[97%] md:w-full w-[85%] py-1 xl:ml-2 mt-6 xl:mt-0 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
                             type="text"
                             placeholder="Last Name"
                             minLength={4}
@@ -152,11 +132,9 @@ const SignUp = () => {
                             required
                         />
                         {(lastNameError) && <p className="text-red-500 text-xs mt-0 xl:ml-2">{lastNameError}</p>}
-                        {/* ml-6 px-1 mr-auto md:ml-[146px] xl:ml-[252px] */}
+                        
                         </div>
                     </div>
-                    {/* {(nameError) && <p className="text-red-500 text-xs mt-0 ml-6 px-1 mr-auto md:ml-[146px] xl:ml-[252px]">{nameError}</p>} */}
-                    
                     <input
                         className="md:w-3/5 w-[85%] mt-6 py-1 border-b-[1px] font-semibold border-gray-600 placeholder-gray-600 outline-none"
                         type="email"
@@ -193,8 +171,10 @@ const SignUp = () => {
                         Continue
                     </button>
                 </div>
-            </form>
+            </form> 
         </>
+
+
     );
 };
 export default SignUp;

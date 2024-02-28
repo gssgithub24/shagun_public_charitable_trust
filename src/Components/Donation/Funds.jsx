@@ -1,5 +1,4 @@
 import React from 'react'
-import DonationPage from '../../public/DonationPage.png'
 import Progress from './Progress'
 
 function Funds({ img, title, description, createdBy, amount, progress, target }) {

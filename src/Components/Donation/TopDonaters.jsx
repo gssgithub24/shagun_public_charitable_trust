@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from '../../public/Image.png'
 const TopDonators = () => {
     const imgSrc = "https://static.vecteezy.com/system/resources/previews/000/546/107/original/businessman-in-suit-head-vector-icon.jpg";
     return (
@@ -14,7 +13,6 @@ const TopDonators = () => {
                         <div
                             key={index}
                             style={{
-                                // left: `${index * 30}px`,
                                 left: `${index === 1 ? 0 : index * 30}px`, // Reduce left space for the first image
                                 marginLeft: index === 1 ? '3px' : '-27px',
                                 backgroundImage: `url('${imgSrc}')`,

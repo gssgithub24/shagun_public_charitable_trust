@@ -1,5 +1,5 @@
-// import React from 'react'
-import DonationPage from '../../public/DonationPage.png'
+import React from 'react'
+import DonationPage from '../Assets/DonationPage.png'
 import Funds from './Funds'
 import TopDonators from './TopDonaters'
 function Donation() {
@@ -51,7 +51,6 @@ function Donation() {
                     alt='Donation'
                     className='w-full xl:h-[80vh] h-[40vh] bg-black'
                 />
-                {/* <div className="absolute inset-0 bg-gradient-to-tr from-gray-900 via-gray-900/70"></div> */}
                 <div className="absolute inset-0 flex flex-col justify-end items-start m-5 md:m-10 flex-wrap md:pl-5">
                     <h2 id='name' className="text-white text-sm sm:text-2xl lg:text-4xl font-bold md:mb-4 mb-3">DONATE US</h2>
                     <h2 id='title' className="text-white font-semibold sm:text-md md:w-[32rem] lg:text-[22px] sm:w-80 text-start">Donate whatever you heart wants and make your little contributions leading to higher impacts</h2>

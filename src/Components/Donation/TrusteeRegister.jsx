@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import React from 'react'
-// import Register from '../../public/Register.png'
 function TrusteeRegister() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -66,26 +65,6 @@ function TrusteeRegister() {
         <form action="">
           <div className='min-w-full h-screen  flex flex-col justify-center items-center p-3'>
             <div className='md:w-[60%] w-full my-8 border-[1.5px] border-orange-500 md:p-20 p-14 md:px-14 px-5 bg-black bg-opacity-70 inset-0 rounded-2xl shadow-lg shadow-orange-500/50'>
-              {/* <div className='flex xl:flex-row flex-col justify-between'>
-                <input
-                  type='text'
-                  className='xl:w-[45%] w-full mt-8 xl:mt-0 p-2 placeholder-white rounded-lg bg-transparent border-[1.5px] border-white text-white outline-none'
-                  placeholder='First name'
-                  minLength={2}
-                  value={firstName}
-                  onChange={handleFirstName}
-                  required
-                />                
-                <input
-                  type='text'
-                  className='xl:w-[45%] w-full mt-8 xl:mt-0 p-2 placeholder-white rounded-lg bg-transparent border-[1.5px] border-white text-white outline-none'
-                  placeholder='Last name'
-                  minLength={4}
-                  value={lastName}
-                  onChange={handleLastName}
-                  required
-                />
-            </div> */}
               <div className='flex xl:flex-row flex-col justify-between'>
                 <div className='w-full flex flex-col'>
                   <input
@@ -112,7 +91,6 @@ function TrusteeRegister() {
                   {(lastNameError) && <p className="text-red-500 text-xs mt-0 xl:ml-2">{lastNameError}</p>}
                 </div>
               </div>
-              {/* {(nameError) && <p className="text-red-500 text-sm mt-0">{nameError}</p>} */}
               <div className='flex flex-col'>
                 <input
                   type='email'
