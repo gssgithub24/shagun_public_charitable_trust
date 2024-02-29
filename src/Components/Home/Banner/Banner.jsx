@@ -29,7 +29,7 @@ const Banner = () => {
               className="h-screen w-screen object-cover "
             />
 
-            <div className="absolute top-0 bg-opacity-60 bg-black h-screen w-screen"></div>
+            <div className="absolute top-0 bg-opacity-45 bg-black h-screen w-screen"></div>
           </div>
         </div>
         <div>
