@@ -26,7 +26,7 @@ const FutureprojectsPage = () => {
             <div className="flex md:flex-col flex-row gap-[29px] h-[410px] md:h-auto items-start justify-start max-w-[1091px] p-2.5 w-full">
               <img
                 className="md:flex-1 h-[387px] sm:h-auto object-cover w-[388px] md:w-full"
-                src="images/img_studybuddy1.png"
+                src="projimages/img_studybuddy1.png"
                 alt="studybuddyOne"
               />
               <h2 className="text-black-900 text-xl" size="txtInterMedium20">
@@ -77,14 +77,14 @@ const FutureprojectsPage = () => {
                 </h2>
                 <img
                   className="md:flex-1 h-[388px] sm:h-auto object-cover w-[387px] md:w-full"
-                  src="images/img_ui31.png"
+                  src="projimages/img_ui31.png"
                   alt="uiThirtyOne"
                 />
               </div>
               <div className="flex md:flex-col flex-row md:gap-10 gap-[66px] h-[433px] md:h-auto items-center justify-center max-w-[1201px] w-full">
                 <img
                   className="md:flex-1 h-[388px] sm:h-auto object-cover w-[387px] md:w-full"
-                  src="images/img_incomegenerati.png"
+                  src="projimages/img_incomegenerati.png"
                   alt="incomegenerati"
                 />
                 <h2
