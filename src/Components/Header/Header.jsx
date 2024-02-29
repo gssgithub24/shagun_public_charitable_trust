@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../Assets/Images/SPCT Logo.png";
+import logo_w from "../../Assets/svgs/logo_w.svg";
 import Headercomponent from "./Headercomponent";
 function Header({ color }) {
   console.log(color);
@@ -9,19 +10,19 @@ function Header({ color }) {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className="w-full h-11 sticky top-0 bg-transparent">
+    <header className="w-full h-11 sticky top-0 bg-transparent font-roboto">
       <div
         className={`flex my-4 px-8 justify-between items-center ${
           color === "white" ? "text-white" : "text-black"
         }`}
       >
-        <div className="hover:scale-125 transition-all transform duration-[1500ms]">
+        <a className="hover:scale-125 transition-all transform duration-[1500ms]">
           {color === "white" ? (
-            <img src={logo} alt="" width={100} />
+            <img src={logo_w} alt="" width={100} />
           ) : (
             <img src={logo} alt="" width={100} />
           )}
-        </div>
+        </a>
 
         <div className="hidden lg:flex gap-10 font-sans   xl:visible items-center ">
           <a href="/">
@@ -31,10 +32,12 @@ function Header({ color }) {
           <Headercomponent text={"About"} />
           <Headercomponent text={"News"} />
           <Headercomponent text={"Join us"} />
-          <Headercomponent text={"Donate"} />
+          <a href="/donation">
+            <Headercomponent text={"Donate"} />
+          </a>
 
           <a
-            href="#_"
+            href="/login"
             className="relative inline-flex items-center justify-center  p-2 px-4 py-1 overflow-hidden font-medium text-orange-600 rounded-3xl shadow-2xl group hover:scale-105 transition ease-in-out duration-500"
           >
             <span className="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-orange-600 rounded-full blur-md ease"></span>
@@ -109,14 +112,16 @@ function Header({ color }) {
 
           {isMenuOpen && (
             <div className="absolute w-[60vw] top-0 right-16  z-50">
-              <div className=" flex flex-col rounded-2xl  items-center gap-5 bg-black py-10 px-10 ">
+              <div className=" flex flex-col rounded-2xl  items-center gap-5 bg-gray-400 py-10 px-10 ">
                 <a href="/" onClick={toggleMenu}>
                   <Headercomponent text={"Home"} />
                 </a>
                 <Headercomponent text={"About"} />
                 <Headercomponent text={"News"} />
                 <Headercomponent text={"Join us"} />
-                <Headercomponent text={"Donate"} />
+                <a href="/donation" onClick={toggleMenu}>
+                  <Headercomponent text={"Donate"} />
+                </a>
               </div>
             </div>
           )}
