@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../../Components/Firebase/Firebase";
+import { collection, doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -57,6 +61,28 @@ const SignUp = () => {
     }
 
     if (valid) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(async (userCredential) => {
+          updateProfile(auth.currentUser, {
+            displayName: firstName + " " + lastName,
+          });
+          const userDocRef = doc(collection(db, "users"), auth.currentUser.uid);
+          await setDoc(userDocRef, {
+            id: userCredential.user.uid,
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+          });
+          alert("Successfully created an account...");
+          navigate("/login");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+          // ..
+        });
       console.log("Successfully created an account...");
     }
   };
@@ -170,10 +196,30 @@ const SignUp = () => {
             minLength={8}
             required
           />
-          {passwordError && (
-            <p className="text-start left-0 text-red-500 text-xs mt-0 mr-auto md:ml-[20%] xl:ml-[20%] ml-[7%]">
+
+          {passwordError ? (
+            <p className="md:w-[60%] w-[90%] text-start left-0 text-red-500 text-xs mt-0 mr-auto md:ml-[20%] xl:ml-[20%] ml-[7%]">
               {passwordError}
             </p>
+          ) : (
+            <div className="w-full md:ml-[40%] xl:ml-[40%] ml-[10%] md:px-0 px-4">
+              <p className="flex items-center gap-1 justify-start mt-2 text-start font-roboto text-[14px] antialiased font-normal leading-normal text-gray-700">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-4 h-4 -mt-px"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                Use at least 8 characters, one uppercase, one lowercase and one
+                number.
+              </p>
+            </div>
           )}
 
           <input

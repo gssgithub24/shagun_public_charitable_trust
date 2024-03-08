@@ -1,8 +1,11 @@
 import React,{useState} from 'react';
 import Header from '../../Components/Header/Header';
 import Footer from '../../Components/Footer/Footer';
-
+import { auth } from '../../Components/Firebase/Firebase';
+import {signInWithEmailAndPassword} from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
+  const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -10,8 +13,7 @@ const Login = () => {
     const handleLoginClick = (e) => {
         let valid = true;
         e.preventDefault();
-
-        //Check Email
+        
         if (!validateEmail(email)) {
             setEmailError('Enter valid Email.');
             valid = false;
@@ -26,6 +28,20 @@ const Login = () => {
             setPasswordError('');
         }
         if (valid) {
+          signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+              // Signed in
+              const user = userCredential.user;
+              // ...
+              alert("Successfully logged in...")
+              navigate('/')
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              alert(errorMessage)
+            });
+
             console.log("Successfully created an account...")
         }
     };

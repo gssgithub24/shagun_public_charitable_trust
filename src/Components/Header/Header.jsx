@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import logo from "../../Assets/Images/SPCT Logo.png";
 import logo_w from "../../Assets/svgs/logo_w.svg";
 import Headercomponent from "./Headercomponent";
+import { useNavigate } from "react-router-dom";
 function Header({ color }) {
+  const navigate = useNavigate();
+
   console.log(color);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -25,20 +28,40 @@ function Header({ color }) {
         </a>
 
         <div className="hidden lg:flex gap-10 font-sans   xl:visible items-center ">
-          <a href="/">
+          <div
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <Headercomponent text={"Home"} />
-          </a>
-
+          </div>{" "}
           <Headercomponent text={"About"} />
-          <Headercomponent text={"News"} />
-          <Headercomponent text={"Join us"} />
-          <a href="/donation">
+          <div
+            onClick={() => {
+              navigate("/newAndUpdates");
+            }}
+          >
+            <Headercomponent text={"News"} />
+          </div>
+          <div
+            onClick={() => {
+              navigate("/trusteeRegister");
+            }}
+          >
+            <Headercomponent text={"Join us"} />
+          </div>
+          <div
+            onClick={() => {
+              navigate("/donation");
+            }}
+          >
             <Headercomponent text={"Donate"} />
-          </a>
-
-          <a
-            href="/login"
-            className="relative inline-flex items-center justify-center  p-2 px-4 py-1 overflow-hidden font-medium text-orange-600 rounded-3xl shadow-2xl group hover:scale-105 transition ease-in-out duration-500"
+          </div>
+          <div
+            onClick={() => {
+              navigate("/login");
+            }}
+            className="relative inline-flex items-center justify-center  cursor-pointer p-2 px-4 py-1 overflow-hidden font-medium text-orange-600 rounded-3xl shadow-2xl group hover:scale-105 transition ease-in-out duration-500"
           >
             <span className="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-orange-600 rounded-full blur-md ease"></span>
             <span className="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
@@ -46,7 +69,7 @@ function Header({ color }) {
               <span className="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-orange-600 rounded-full blur-md"></span>
             </span>
             <span className="relative text-white">Start a fundraise</span>
-          </a>
+          </div>
         </div>
         <div className="lg:hidden relative z-10">
           <button
@@ -113,15 +136,43 @@ function Header({ color }) {
           {isMenuOpen && (
             <div className="absolute w-[60vw] top-0 right-16  z-50">
               <div className=" flex flex-col rounded-2xl  items-center gap-5 bg-gray-400 py-10 px-10 ">
-                <a href="/" onClick={toggleMenu}>
+                <div
+                  onClick={() => {
+                    toggleMenu();
+                    navigate("/");
+                  }}
+                >
                   <Headercomponent text={"Home"} />
-                </a>
+                </div>{" "}
                 <Headercomponent text={"About"} />
-                <Headercomponent text={"News"} />
-                <Headercomponent text={"Join us"} />
-                <a href="/donation" onClick={toggleMenu}>
+                <div
+                  onClick={() => {
+                    navigate("/newAndUpdates");
+                  }}
+                >
+                  <Headercomponent text={"News"} />
+                </div>
+                <div
+                onClick={()=>{
+                  navigate("/trusteeRegister");
+                }}>
+                <Headercomponent text={"Join us"} /></div>
+                <div
+                  onClick={() => {
+                    toggleMenu();
+                    navigate("/donation");
+                  }}
+                >
                   <Headercomponent text={"Donate"} />
-                </a>
+                </div>
+                <div
+                  onClick={() => {
+                    toggleMenu();
+                    navigate("/login");
+                  }}
+                >
+                  <Headercomponent text={"Start Fund Raiser"} />
+                </div>
               </div>
             </div>
           )}
