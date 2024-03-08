@@ -45,11 +45,11 @@ function Donation() {
     ]
     return (
       <div className="font-roboto">
-        <div className="relative min-w-full xl:h-[80vh] h-[40vh] mx-auto overflow-hidden object-cover">
+        <div className="relative min-w-full xl:h-[80vh] h-[60vh] mx-auto overflow-hidden object-cover">
           <div className="absolute top-0 right-0 z-50 w-full">
             <Header color={"white"} />
           </div>
-          <div className="w-screen xl:h-[80vh] h-[40vh] relative">
+          <div className="w-screen xl:h-[80vh] h-[60vh] relative">
             <img
               src={DonationPage}
               alt="Donation"
