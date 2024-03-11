@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import Modal from "../../../../Components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
+import { doc, collection, setDoc } from "firebase/firestore";
+import { storage, db } from '../../../../Components/Firebase/Firebase'
 const EditNews = ({ openModal, closeModal, isModalOpen }) => {
   const [image, setImage] = useState(null);
+  const [file, setFile] = useState();
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -22,21 +26,43 @@ const EditNews = ({ openModal, closeModal, isModalOpen }) => {
     }
   };
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
+    let temp = event.target.files[0]
+    setFile(event.target.files[0]);
+    if (temp) {
+      console.log(temp)
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(temp);
     }
+
   };
 
   const clearImage = () => {
     setImage(null);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const banner = ref(storage, 'news/' + data.title)
+      await uploadBytes(banner, file)
+
+      const newsDocRef = doc(collection(db, "news"), data.title);
+      await setDoc(newsDocRef, {
+        title: data.title,
+        description: data.description,
+        option: data.option,
+        date: data.date,
+      });
+      
+    } catch (error) {
+      alert(error)
+    }
+    closeModal()
+
+  };
 
   return (
     <>

@@ -3,9 +3,9 @@ import React from "react";
 import Register from "../../Assets/Images/Register.png";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../Components/Firebase/Firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
+// import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// import { auth, db } from "../../Components/Firebase/Firebase";
+// import { collection, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import './TrusteeRegister.css';
 
