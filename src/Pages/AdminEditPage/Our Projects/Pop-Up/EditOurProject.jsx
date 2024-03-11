@@ -49,7 +49,7 @@ const EditOurProject = ({ openModal, closeModal, isModalOpen }) => {
   const handleSubmit = async () => {
     try {
       const metadata = {
-        contentType: "image/png",
+        contentType: "image/JPEG",
       };
       console.log(data);
       const docRef = doc(collection(db, "Projects"));
