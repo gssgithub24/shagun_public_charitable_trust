@@ -1,18 +1,12 @@
 import React, { useState } from "react";
 import Modal from "../../../../Components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../../../Components/Firebase/Firebase";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { ref, uploadBytes } from 'firebase/storage'
+import { doc, collection, setDoc } from "firebase/firestore";
+import { storage, db } from '../../../../Components/Firebase/Firebase'
 const EditOurProject = ({ openModal, closeModal, isModalOpen }) => {
   const [image, setImage] = useState(null);
-  const [imageName, setImageName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [file, setFile] = useState();
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -31,69 +25,39 @@ const EditOurProject = ({ openModal, closeModal, isModalOpen }) => {
   };
 
   const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-      setImageName(file.name);
-    }
+    let temp = event.target.files[0]
+        setFile(event.target.files[0]);
+        if (temp) {
+            //   console.log(temp)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result);
+            };
+            reader.readAsDataURL(temp);
+        }
   };
 
   const clearImage = () => {
     setImage(null);
   };
 
-  const handleSubmit = async () => {
-    try {
-      const metadata = {
-        contentType: "image/JPEG",
-      };
-      console.log(data);
-      const docRef = doc(collection(db, "Projects"));
-      const storage = getStorage();
-      const imageRef = ref(storage, `images/${imageName}`);
-      const uploadTask = uploadBytesResumable(imageRef, image, metadata);
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+        try {
+            // console.log(data)
+            const banner = ref(storage, 'projects/' + data.title)
+            await uploadBytes(banner, file)
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Observe state change events such as progress, pause, and resume
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          // alert("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              // alert("Upload is paused");
-              break;
-            case "running":
-              // alert("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          alert(error);
-        },
-        () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-           alert("File available at", downloadURL);
-            setImageUrl(downloadURL);
-          });
+            const certificateDocRef = doc(collection(db, "projects"), data.title);
+            await setDoc(certificateDocRef, {
+                title: data.title,
+                description: data.description
+            });
+
+        } catch (error) {
+            alert(error)
         }
-      );
-      await setDoc(docRef, {
-        title: data.title,
-        desc: data.description,
-        imgUrl: imageUrl,
-      });
-    } catch (e) {
-      alert(`Error : ${e}`);
-    }
+        closeModal()
   };
 
   return (
@@ -112,7 +76,7 @@ const EditOurProject = ({ openModal, closeModal, isModalOpen }) => {
                       <img
                         src={image}
                         alt="Uploaded"
-                        className="h-full  object-cover "
+                        className="h-full  object-cover py-2"
                       />
                       <div className=" absolute -top-2 -right-2 bg-slate-300 border-2 border-gray-400 p-1 rounded-full text-xl">
                         <IoClose
@@ -213,7 +177,6 @@ const EditOurProject = ({ openModal, closeModal, isModalOpen }) => {
             </div>
           </form>
         </Modal>
-        {/* <button onClick={openModal}>Open</button> */}
       </div>
     </>
   );
