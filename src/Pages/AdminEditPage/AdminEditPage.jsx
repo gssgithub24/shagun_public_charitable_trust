@@ -7,14 +7,17 @@ import { CiSquarePlus } from "react-icons/ci";
 import NewsandUpdates from "./News and Updates/NewsandUpdate";
 import EditNews from "./News and Updates/Pop-Up/EditNews";
 import Certificate from "./Certificates/Certificate";
+import EditCertificate from "./Certificates/Pop-Up/EditCertificate";
 const AdminEditPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isNewsModalOpen, setNewsModalOpen] = useState(false);
+  const [isCertificateModalOpen, setCertificateModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const openNewsModal = () => setNewsModalOpen(true);
   const closeNewsModal = () => setNewsModalOpen(false);
-
+  const openCertificateModal = () => setCertificateModalOpen(true);
+  const closeCertificateModal = () => setCertificateModalOpen(false);
   
     
   
@@ -84,7 +87,7 @@ const AdminEditPage = () => {
           </span>
           <span
             className="px-2 py-1 border-green-600 border-2 rounded-lg bg-gradient-to-br hover:text-white hover:from-green-600 hover:shadow-lg drop-shadow-2xl- cursor-pointer transition-all ease-in-out duration-500 hover:shadow-green-300 flex gap-2  justify-center items-center font-medium hover:to-green-400"
-            onClick={openNewsModal}
+            onClick={openCertificateModal}
           >
             Create New Event
             <CiSquarePlus size={25} />
@@ -106,13 +109,21 @@ const AdminEditPage = () => {
           closeModal={closeModal}
         />
       )}
-      {
+      {isNewsModalOpen &&
         <EditNews
           isModalOpen={isNewsModalOpen}
           openModal={openNewsModal}
           closeModal={closeNewsModal}
         />
       }
+      {isCertificateModalOpen &&
+        <EditCertificate
+          isModalOpen={isCertificateModalOpen}
+          openModal={openCertificateModal}
+          closeModal={closeCertificateModal}
+        />
+      }
+      
       <div>
         <Footer />
       </div>
