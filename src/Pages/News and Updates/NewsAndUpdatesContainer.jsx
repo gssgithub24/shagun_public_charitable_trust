@@ -25,8 +25,8 @@ const NewsAndUpdatesContainer = ({title, description, option, date}) => {
           
           <div className='mt-6 mb-3'>
         <div className='container mx-auto xl:flex xl:justify-center block'>
-          <div className='xl:w-[33%] w-[90%] xl:mx-0 mx-auto'>
-            <img src={bannersrc && bannersrc} alt="" className='w-[100%] rounded-xl' />
+          <div className='xl:w-[33%] w-[90%] h-72 xl:mx-0 mx-auto'>
+            <img src={bannersrc} alt="" className='w-full h-full rounded-xl' />
           </div>
           <div className='xl:px-10 md:px-11 px-6 xl:w-[50%] w-full xl:mt-3 mt-3'>
             <p className='font-semibold md:text-2xl text-xl'>{title}</p>

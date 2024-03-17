@@ -1,24 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "../../../../Components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, collection, setDoc, updateDoc } from "firebase/firestore";
 import { storage, db } from "../../../../Components/Firebase/Firebase";
 import DataContext from "../../../../Context/FetchData/DataContext";
-import DeleteDataContext from "../../../../Context/DeleteData/DeleteDataContext";
 import LoadContext from "../../../../Context/LoadingAnimation/LoadingContext";
-const EditCertificate = ({
-  openModal,
-  closeModal,
-  isModalOpen,
-  CertificateData,
-}) => {
-
+const CreateNews = ({ openModal, closeModal, isModalOpen }) => {
   const [image, setImage] = useState(null);
   const [file, setFile] = useState();
   const [data, setData] = useState({
@@ -26,15 +14,14 @@ const EditCertificate = ({
     description: "",
     option: "",
     date: "",
+    imageUrl: "",
   });
   const [imageError, setImageError] = useState();
   const [titleError, setTitleError] = useState();
   const [descriptionError, setDescriptionError] = useState();
   const [dateError, setDateError] = useState();
-
-  const { isloading, openSetLoading, closeSetLoading } = useContext(LoadContext);
-  const { certificateDataRetrival } = useContext(DataContext);
-  const {deleteCertificate} = useContext(DeleteDataContext)
+  const { newsDataRetrival } = useContext(DataContext);
+  const {isloadinhg, openSetLoading, closeSetLoading} = useContext(LoadContext)
   const handleChange = (e) => {
     try {
       const { name, value } = e.target;
@@ -54,7 +41,7 @@ const EditCertificate = ({
     let temp = event.target.files[0];
     setFile(event.target.files[0]);
     if (temp) {
-      //   console.log(temp)
+      console.log(temp);
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result);
@@ -63,23 +50,10 @@ const EditCertificate = ({
       setImageError("");
     }
   };
+
   const clearImage = () => {
     setImage(null);
   };
-
-  const setdata = () => {
-    setData({
-      title: CertificateData?.title,
-      description: CertificateData?.description,
-      option: CertificateData?.option,
-      date: CertificateData?.date,
-    });
-    setImage(CertificateData?.imageUrl);
-    console.log(data.title)
-  };
-  useEffect(() => {
-    setdata();
-  }, []);
   const validate = () => {
     let valid = true;
     if (!image) {
@@ -112,53 +86,39 @@ const EditCertificate = ({
       return false;
     }
   };
-  const handleUpdate = async (e) => {
-    const certificateDocRef = doc(
-      collection(db, "certificate"),
-      CertificateData.id
-    );
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (validate()) {
         closeModal();
         openSetLoading();
-        if (CertificateData.imageUrl !== image && image) {
-          const banner = ref(storage, "certificate/" + data.title);
-          try{
-             await deleteObject(banner).then((res) => {
-            console.log("Image Deleted" + res);
-            alert("Image Deleted");
+        const metadata = {
+          contentType: file.type, // Set content type to the file's MIME type
+          // Add any other metadata properties you want to include
+        };
+        const banner = ref(storage, "news/" + data.title);
+        await uploadBytes(banner, file, metadata).then(async (snapshot) => {
+          await getDownloadURL(snapshot.ref).then((downloadUrl) => {
+            console.log(downloadUrl);
+            data.imageUrl = downloadUrl;
           });
-          await uploadBytes(banner, file).then(async (snapshot) => {
-            await getDownloadURL(snapshot.ref).then((downloadUrl) => {
-              console.log(downloadUrl);
-              data.imageUrl = downloadUrl;
-            });
-          });await updateDoc(certificateDocRef, {
-            imageUrl: data.imageUrl,
-          });
-          }catch (error) {
-            console.log(error)
-          }
-         
+        });
 
-          
-        }
+        const newsDocRef = doc(collection(db, "news"));
+        await setDoc(newsDocRef, {
+          title: data.title,
+          description: data.description,
+          option: data.option,
+          date: data.date,
+          imageUrl: data.imageUrl,
+        });
 
-        if (
-          CertificateData.title !== data.title ||
-          CertificateData.description !== data.description ||
-          CertificateData.date !== data.date ||
-          CertificateData.option !== data.option
-        ) {
-          await updateDoc(certificateDocRef, {
-            title: data.title,
-            description: data.description,
-            option: data.option,
-            date: data.date,
-          });
-        }
-        await certificateDataRetrival();
+        // Get the ID of the newly created document
+        const docId = newsDocRef.id;
+
+        // Update the document with the ID
+        await updateDoc(newsDocRef, { id: docId });
+        await newsDataRetrival();
         closeSetLoading();
       }
     } catch (error) {
@@ -166,16 +126,9 @@ const EditCertificate = ({
     }
   };
 
-  const handleDelete = async () => {
-    closeModal();
-    openSetLoading();
-    deleteCertificate(CertificateData);
-    await certificateDataRetrival();
-    closeSetLoading();
-  }
   return (
     <>
-      <div className="">
+      <div>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <form className="">
             <div className="flex md:flex-row flex-col justify-center items-center">
@@ -291,23 +244,61 @@ const EditCertificate = ({
                     {descriptionError}
                   </p>
                 )}
+                <div className="flex md:flex-row flex-col justify-between items-center mt-2 w-full gap-2">
+                  <div className="w-full ">
+                    <select
+                      className=" bg-transparent appearance-none border-2 border-gray-400 hover:border-orange-600 rounded-lg py-1 px-2 outline-none text-black text-center w-full"
+                      value={data.option}
+                      name="option"
+                      onChange={handleChange}
+                    >
+                      <option
+                        value="Choose Option"
+                        className=" bg-slate-200 text-black text-left"
+                      >
+                        Choose Option
+                      </option>
+                      <option
+                        value="Upcoming Project"
+                        className=" bg-slate-200 text-black text-left"
+                      >
+                        Upcoming Project
+                      </option>
+
+                      <option
+                        value="Project Completed"
+                        className=" bg-slate-200 text-black text-left"
+                      >
+                        Project Completed
+                      </option>
+                    </select>
+                  </div>
+
+                  <div className="md:mt-0 mt-2  w-full ">
+                    <input
+                      type="date"
+                      className="bg-transparent border-2 border-gray-400 hover:border-orange-600 rounded-lg py-1 px-2 outline-none text-black text-start  w-full cursor-pointer"
+                      value={data.date}
+                      onChange={handleChange}
+                      name="date"
+                    />
+                  </div>
+                </div>
+                {dateError && (
+                  <p className="text-red-600 text-sm mx-1 flex justify-start md:justify-end ">
+                    {dateError}
+                  </p>
+                )}
               </div>
             </div>
-            <div className="flex flex-row md:justify-end justify-center items-end">
-              <button
-                className="mx-3 bg-slate-500 px-14 py-2 hover:bg-red-400 text-white rounded-md"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
+            <div className="flex flex-row  justify-end items-end">
               <button
                 className="mx-3 bg-orange-500 px-14 py-2 hover:bg-orange-600 text-white rounded-md"
-                onClick={handleUpdate}
+                onClick={handleSubmit}
               >
-                Update
+                Publish
               </button>
             </div>
-           
           </form>
         </Modal>
       </div>
@@ -315,4 +306,4 @@ const EditCertificate = ({
   );
 };
 
-export default EditCertificate;
+export default CreateNews;
