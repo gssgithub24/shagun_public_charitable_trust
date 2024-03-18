@@ -36,12 +36,18 @@ const DeleteState = ({ children }) => {
     const banner = ref(storage, "certificate/" + data.title);
     await deleteObject(banner).then((res) => {});
   };
+  const deleteTrustee = async (data) => {
+    await deleteDoc(doc(db, "trustee", data.id));
+    const banner = ref(storage, "trustee/" + data.name);
+    await deleteObject(banner).then((res) => {});
+  };
   return (
     <DeleteDataContext.Provider
       value={{
         deleteNews,
         deleteProject,
         deleteCertificate,
+        deleteTrustee
       }}
     >
       {children}

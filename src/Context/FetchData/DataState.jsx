@@ -7,6 +7,7 @@ function DataState(props) {
   const [newsData, setNewsData] = useState([]);
   const [projectData, setProjectData] = useState([]);
   const [certificateData, setCertificateData] = useState([]);
+  const [trusteeData, setTrusteeData] = useState([]);
   const newsDataRetrival = async () => {
     console.log("Start");
     const q = query(collection(db, "news"));
@@ -17,7 +18,6 @@ function DataState(props) {
       // console.log(doc.id, " => ", doc.data());
     });
     setNewsData(newData);
-
   };
 
   const projectDataRetrival = async () => {
@@ -31,7 +31,6 @@ function DataState(props) {
     setProjectData(newData);
   };
 
-
   const certificateDataRetrival = async () => {
     const q = query(collection(db, "certificate"));
     const querySnapshot = await getDocs(q);
@@ -40,6 +39,15 @@ function DataState(props) {
       newData.push({ id: doc.id, ...doc.data() });
     });
     setCertificateData(newData);
+  };
+  const trusteeDataRetrival = async () => {
+    const q = query(collection(db, "trustee"));
+    const querySnapshot = await getDocs(q);
+    const newData = [];
+    querySnapshot.forEach((doc) => {
+      newData.push({ id: doc.id, ...doc.data() });
+    });
+    setTrusteeData(newData);
   };
 
   return (
@@ -51,6 +59,8 @@ function DataState(props) {
         projectDataRetrival,
         certificateData,
         certificateDataRetrival,
+        trusteeData,
+        trusteeDataRetrival
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import OurProjects from "./Our Projects/OurProjects";
@@ -13,40 +13,65 @@ import EditNews from "./News and Updates/Pop-Up/EditNews";
 import EditCertificate from "./Certificates/Pop-Up/EditCertificate";
 import { HashLoader } from "react-spinners";
 import LoadContext from "../../Context/LoadingAnimation/LoadingContext";
-const AdminEditPage = () => {
+import Trustee from "./Trustees/Trustee";
+import AddTrustee from "./Trustees/pop-up/AddTrustee";
+import EditTrustee from "./Trustees/pop-up/EditTrustee";
+import { useNavigate } from "react-router-dom";
+const AdminEditPage = () => { const navigate = useNavigate();
+  const handlePasswordPrompt = () => {
+
+   setAuthLoad(true);
+    const enteredPassword = prompt("Please enter your password:");
+    if (enteredPassword !== "Shagun@2024") {
+     navigate("/access-denied");
+     setAuthLoad(true);
+    }else{
+      setAuthLoad(false);
+    }
+  };
+
+  useEffect(() => {
+    handlePasswordPrompt();
+  }, []);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isNewsModalOpen, setNewsModalOpen] = useState(false);
   const [isCertificateModalOpen, setCertificateModalOpen] = useState(false);
+  const [isTrusteeModalOpen, setTrusteeModalOpen] = useState(false);
 
   const [isEditProjectModalOpen, setEditProjectModalOpen] = useState(false);
   const [isEditNewModalOpen, setEditNewModalOpen] = useState(false);
-  const [isEditCertificateModalOpen, setEditCertificateModalOpen] = useState(false);
+  const [isEditCertificateModalOpen, setEditCertificateModalOpen] =
+    useState(false);
+  const [isEditTruteeModalOpen, setEditTruteeModalOpen] = useState(false);
 
+  const [TrusteeData, setTruteeData] = useState();
   const [ProjectData, setProjectData] = useState();
   const [NewsData, setNewsData] = useState();
   const [CertificateData, setCertificateData] = useState();
 
   const { isloading, openSetLoading, closeSetLoading } =
     useContext(LoadContext);
-
+const [authload,setAuthLoad] = useState(true);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const openNewsModal = () => setNewsModalOpen(true);
   const closeNewsModal = () => setNewsModalOpen(false);
   const openCertificateModal = () => setCertificateModalOpen(true);
   const closeCertificateModal = () => setCertificateModalOpen(false);
+  const openTrusteeModal = () => setTrusteeModalOpen(true);
+  const closeTrusteeModal = () => setTrusteeModalOpen(false);
 
   const openEditProjectModal = (data) => {
     console.log("openEditProjectModal b", isEditProjectModalOpen);
     setEditProjectModalOpen(true);
     setProjectData(data);
-    console.log('openEditProjectModal a',isEditProjectModalOpen)
+    console.log("openEditProjectModal a", isEditProjectModalOpen);
   };
   const closeEditProjectModal = () => {
-    console.log('closeEditProjectModal b',isEditProjectModalOpen)
+    console.log("closeEditProjectModal b", isEditProjectModalOpen);
     setEditProjectModalOpen(false);
     setProjectData(null);
-    console.log('closeEditProjectModal a',isEditProjectModalOpen)
+    console.log("closeEditProjectModal a", isEditProjectModalOpen);
   };
 
   const openEditNewsModal = (data) => {
@@ -56,6 +81,16 @@ const AdminEditPage = () => {
   const closeEditNewsModal = () => {
     setEditNewModalOpen(false);
     setNewsData(null);
+  };
+
+  const openEditTrusteeModal = (data) => {
+    setEditTruteeModalOpen(true);
+    setTruteeData(data);
+  };
+
+  const closeEditTrusteeModal = () => {
+    setEditTruteeModalOpen(false);
+    setTruteeData(null);
   };
 
   const openEditCertificateModal = (data) => {
@@ -68,7 +103,10 @@ const AdminEditPage = () => {
   };
 
   return (
-    <div className="">
+    <div className="relative">
+      {authload && (
+        <div className="absolute inset-0  w-full h-full z-50 bg-slate-100 "></div>
+      )}
       <div>
         <Header />
       </div>
@@ -165,7 +203,7 @@ const AdminEditPage = () => {
           </span>
           <span
             className="px-2 py-1 border-green-600 border-2 rounded-lg bg-gradient-to-br hover:text-white hover:from-green-600 hover:shadow-lg drop-shadow-2xl- cursor-pointer transition-all ease-in-out duration-500 hover:shadow-green-300 flex gap-2  justify-center items-center font-medium hover:to-green-400"
-            onClick={openCertificateModal}
+            onClick={openTrusteeModal}
           >
             Add Trustee
             <CiSquarePlus size={25} />
@@ -176,21 +214,40 @@ const AdminEditPage = () => {
           <span className=" h-0.5 w-[99%] bg-gray-300"></span>
         </div>
 
-        <div className="w-full">
-          <Certificate
-            openEditCertificateModal={openEditCertificateModal}
-            closeEditCertificateModal={closeEditCertificateModal}
+        <div className="w-full z-0">
+          <Trustee
+            openEditTrusteeModal={openEditTrusteeModal}
+            closeEditTrusteeModal={closeEditTrusteeModal}
           />
         </div>
       </div>
-      {isloading && (<div className=" h-full w-screen fixed z-50 bg-opacity-65   rounded-lg top-0 right-0 bg-gray-700 flex justify-center items-center">
-        <HashLoader color="#eb9126" />
-      </div>)}
+      {isloading && (
+        <div className=" h-full w-screen fixed z-50 bg-opacity-65   rounded-lg top-0 right-0 bg-gray-700 flex justify-center items-center">
+          <HashLoader color="#eb9126" />
+        </div>
+      )}
       {isModalOpen && (
         <AddOurProject
           isModalOpen={isModalOpen}
           openModal={openModal}
           closeModal={closeModal}
+        />
+      )}
+      {isTrusteeModalOpen && (
+        <AddTrustee
+          className="z-50"
+          isModalOpen={isTrusteeModalOpen}
+          openModal={openTrusteeModal}
+          closeModal={closeTrusteeModal}
+        />
+      )}
+      {isEditTruteeModalOpen && (
+        <EditTrustee
+          className="z-50"
+          isModalOpen={isEditTruteeModalOpen}
+          openModal={openEditTrusteeModal}
+          closeModal={closeEditTrusteeModal}
+          TrusteeData={TrusteeData}
         />
       )}
       {isNewsModalOpen && (
@@ -232,6 +289,7 @@ const AdminEditPage = () => {
           CertificateData={CertificateData}
         />
       )}
+
       <div>
         <Footer />
       </div>

@@ -8,27 +8,31 @@ import DataContext from "../../../Context/FetchData/DataContext";
 import LoadContext from "../../../Context/LoadingAnimation/LoadingContext";
 import { HashLoader } from "react-spinners";
 
-const NewsComponents = ({
-  openEditNewsModal,
-  closeEditNewsModal,
-  upcoming,
-  data,
-}) => {
-  const {isloading, openSetLoading, closeSetLoading} = useContext(LoadContext)
-    const { newsDataRetrival } = useContext(DataContext);
-const { deleteNews} = useContext(DeleteDataContext)
+const NewsComponents = ({ openEditNewsModal, closeEditNewsModal, data }) => {
+  const { isloading, openSetLoading, closeSetLoading } =
+    useContext(LoadContext);
+  const { newsDataRetrival } = useContext(DataContext);
+  const { deleteNews } = useContext(DeleteDataContext);
   // console.log(data);
   // console.log(data?.id);
 
   const handleClick = () => {
     openEditNewsModal(data);
   };
-  const handleDelete = async() => {
-    openSetLoading()
-    deleteNews(data)
-     
+  const handleDelete = async () => {
+    openSetLoading();
+    deleteNews(data);
+
     await newsDataRetrival();
     closeSetLoading();
+  };
+
+  const handleOption = (option) => {
+    if (option === "Upcoming Project" || option === "Project Completed") {
+      return true
+    } else {
+      return false
+    }
   };
   return (
     <>
@@ -47,11 +51,11 @@ const { deleteNews} = useContext(DeleteDataContext)
             />
           </div>
           <div className="flex">
-            <div className="xl:w-[28%] w-[90%] h-[70%] xl:mx-0 mx-auto">
+            <div className="xl:w-[28%] w-[90%] h-72 xl:mx-0 mx-auto">
               <img
                 src={data?.imageUrl}
                 alt=""
-                className="w-[100%] rounded-xl"
+                className="w-[100%] h-full rounded-t-xl"
               />
             </div>
             <div className="xl:px-10 md:px-11 px-6 xl:w-[50%] w-full xl:mt-3 mt-3">
@@ -59,7 +63,7 @@ const { deleteNews} = useContext(DeleteDataContext)
               <p className="text-sm font-normal mt-1">{data?.description}</p>
 
               <div className="mt-2">
-                {upcoming && (
+                {handleOption(data?.option) && (
                   <span className="bg-orange-500 text-xs px-1 py-1 text-white rounded">
                     {data?.option}
                   </span>
@@ -70,7 +74,6 @@ const { deleteNews} = useContext(DeleteDataContext)
           </div>
         </div>
         <div className="z-50"></div>
-       
       </div>
     </>
   );
