@@ -1,40 +1,27 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "../../../../Components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytes,
-} from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc, collection, setDoc, updateDoc } from "firebase/firestore";
 import { storage, db } from "../../../../Components/Firebase/Firebase";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import DataContext from "../../../../Context/FetchData/DataContext";
-import DeleteDataContext from "../../../../Context/DeleteData/DeleteDataContext";
 import LoadContext from "../../../../Context/LoadingAnimation/LoadingContext";
-const EditCertificate = ({
-  openModal,
-  closeModal,
-  isModalOpen,
-  CertificateData,
-}) => {
+const AddOurProject = ({ openModal, closeModal, isModalOpen }) => {
+  const { isloding, openSetLoading, closeSetLoading } = useContext(LoadContext);
 
   const [image, setImage] = useState(null);
   const [file, setFile] = useState();
   const [data, setData] = useState({
     title: "",
     description: "",
-    option: "",
-    date: "",
+    imageUrl: "",
   });
   const [imageError, setImageError] = useState();
   const [titleError, setTitleError] = useState();
   const [descriptionError, setDescriptionError] = useState();
-  const [dateError, setDateError] = useState();
 
-  const { isloading, openSetLoading, closeSetLoading } = useContext(LoadContext);
-  const { certificateDataRetrival } = useContext(DataContext);
-  const {deleteCertificate} = useContext(DeleteDataContext)
+  const { projectDataRetrival } = useContext(DataContext);
   const handleChange = (e) => {
     try {
       const { name, value } = e.target;
@@ -43,13 +30,11 @@ const EditCertificate = ({
         [name]: value,
       }));
       validate();
-      if (name === "date") {
-        setDateError("");
-      }
     } catch (error) {
       alert(error);
     }
   };
+
   const handleImageUpload = (event) => {
     let temp = event.target.files[0];
     setFile(event.target.files[0]);
@@ -63,23 +48,10 @@ const EditCertificate = ({
       setImageError("");
     }
   };
+
   const clearImage = () => {
     setImage(null);
   };
-
-  const setdata = () => {
-    setData({
-      title: CertificateData?.title,
-      description: CertificateData?.description,
-      option: CertificateData?.option,
-      date: CertificateData?.date,
-    });
-    setImage(CertificateData?.imageUrl);
-    console.log(data.title)
-  };
-  useEffect(() => {
-    setdata();
-  }, []);
   const validate = () => {
     let valid = true;
     if (!image) {
@@ -100,65 +72,35 @@ const EditCertificate = ({
     } else {
       setDescriptionError("");
     }
-    if (!data.date.toString().trim()) {
-      setDateError("Choose date");
-      valid = false;
-    } else {
-      setDateError("");
-    }
     if (valid) {
       return true;
     } else {
       return false;
     }
   };
-  const handleUpdate = async (e) => {
-    const certificateDocRef = doc(
-      collection(db, "certificate"),
-      CertificateData.id
-    );
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (validate()) {
+        // console.log(data)
         closeModal();
         openSetLoading();
-        if (CertificateData.imageUrl !== image && image) {
-          const banner = ref(storage, "certificate/" + data.title);
-          try{
-             await deleteObject(banner).then((res) => {
-            console.log("Image Deleted" + res);
-            alert("Image Deleted");
+        const banner = ref(storage, "projects/" + data.title);
+        await uploadBytes(banner, file).then(async (snapshot) => {
+          await getDownloadURL(snapshot.ref).then((downloadUrl) => {
+            data.imageUrl = downloadUrl;
           });
-          await uploadBytes(banner, file).then(async (snapshot) => {
-            await getDownloadURL(snapshot.ref).then((downloadUrl) => {
-              console.log(downloadUrl);
-              data.imageUrl = downloadUrl;
-            });
-          });await updateDoc(certificateDocRef, {
-            imageUrl: data.imageUrl,
-          });
-          }catch (error) {
-            console.log(error)
-          }
-         
+        });
 
-          
-        }
-
-        if (
-          CertificateData.title !== data.title ||
-          CertificateData.description !== data.description ||
-          CertificateData.date !== data.date ||
-          CertificateData.option !== data.option
-        ) {
-          await updateDoc(certificateDocRef, {
-            title: data.title,
-            description: data.description,
-            option: data.option,
-            date: data.date,
-          });
-        }
-        await certificateDataRetrival();
+        const projectRef = doc(collection(db, "projects"));
+        await setDoc(projectRef, {
+          title: data.title,
+          description: data.description,
+          imageUrl: data.imageUrl,
+        });
+        const docId = projectRef.id;
+        await updateDoc(projectRef, { id: docId });
+        await projectDataRetrival();
         closeSetLoading();
       }
     } catch (error) {
@@ -166,36 +108,28 @@ const EditCertificate = ({
     }
   };
 
-  const handleDelete = async () => {
-    closeModal();
-    openSetLoading();
-    deleteCertificate(CertificateData);
-    await certificateDataRetrival();
-    closeSetLoading();
-  }
   return (
     <>
-      <div className="">
+      <div>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <form className="">
             <div className="flex md:flex-row flex-col justify-center items-center">
-              <div className="flex items-center justify-center xl:w-[60%] w-full md:my-0 my-4 px-5 relative -z-0">
+              <div className="flex items-center justify-center xl:w-[45%] w-full md:my-0 my-4 px-5">
                 <div className="flex flex-col justify-center items-center w-full">
                   <label
                     htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-full h-[15rem] border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-slate-200 hover:bg-white py-3"
+                    className="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-slate-200  hover:bg-slate-100 transition-all ease-in-out duration-300 relative hover:border-gray-500 "
                   >
                     {image ? (
                       <>
                         <img
                           src={image}
                           alt="Uploaded"
-                          className="h-52 md:w-48 object-cover rounded-lg py-2"
+                          className="h-full  object-cover py-2"
                         />
-                        <div className="bg-gray-400 absolute -top-2 right-2 p-1 rounded-full z-10">
+                        <div className=" absolute -top-2 -right-2 bg-slate-300 border-2 border-gray-400 p-1 rounded-full text-xl">
                           <IoClose
                             className="text-red-700 "
-                            size={15}
                             onClick={clearImage}
                           />
                         </div>
@@ -233,8 +167,8 @@ const EditCertificate = ({
                       id="dropzone-file"
                       type="file"
                       className="hidden"
+                      accept="image/*"
                       onChange={handleImageUpload}
-                      required
                     />
                   </label>
                   {imageError && (
@@ -247,17 +181,17 @@ const EditCertificate = ({
                 <div className="relative">
                   <input
                     type="text"
-                    id="firstname"
-                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
+                    id="title"
+                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
                     placeholder="Title"
                     minLength={4}
-                    value={data.title}
                     name="title"
+                    value={data.title}
                     onChange={handleChange}
                     required
                   />
                   <label
-                    htmlFor="firstname"
+                    htmlFor="title"
                     className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[50%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                   >
                     Title
@@ -266,17 +200,17 @@ const EditCertificate = ({
                 {titleError && (
                   <p className="text-red-600 text-sm mx-1">{titleError}</p>
                 )}
-                <div className="relative mt-2">
+                <div className="relative mt-4">
                   <textarea
                     id="description"
-                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500"
+                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
                     placeholder="Description"
                     minLength={4}
                     rows={6}
-                    style={{ resize: "none" }}
-                    value={data.description}
                     name="description"
+                    value={data.description}
                     onChange={handleChange}
+                    style={{ resize: "none" }}
                     required
                   />
                   <label
@@ -293,21 +227,14 @@ const EditCertificate = ({
                 )}
               </div>
             </div>
-            <div className="flex flex-row md:justify-end justify-center items-end">
+            <div className="flex flex-row md:justify-end justify-between items-end">
               <button
-                className="mx-3 bg-slate-500 px-14 py-2 hover:bg-red-400 text-white rounded-md"
-                onClick={handleDelete}
+                className="mx-3 bg-orange-500 px-5 py-[11px] hover:bg-orange-600 text-white rounded-md"
+                onClick={handleSubmit}
               >
-                Delete
-              </button>
-              <button
-                className="mx-3 bg-orange-500 px-14 py-2 hover:bg-orange-600 text-white rounded-md"
-                onClick={handleUpdate}
-              >
-                Update
+                Publish
               </button>
             </div>
-           
           </form>
         </Modal>
       </div>
@@ -315,4 +242,4 @@ const EditCertificate = ({
   );
 };
 
-export default EditCertificate;
+export default AddOurProject;

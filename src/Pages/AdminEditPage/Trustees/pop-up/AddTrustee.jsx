@@ -1,32 +1,27 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "../../../../Components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
-import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { doc, collection, setDoc, updateDoc,  } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { doc, collection, setDoc, updateDoc } from "firebase/firestore";
 import { storage, db } from "../../../../Components/Firebase/Firebase";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import DataContext from "../../../../Context/FetchData/DataContext";
-import DeleteDataContext from "../../../../Context/DeleteData/DeleteDataContext";
 import LoadContext from "../../../../Context/LoadingAnimation/LoadingContext";
-const EditOurProjects = ({
-  openModal,
-  closeModal,
-  isModalOpen,
-  ProjectData,
-}) => {
+const AddTrustee = ({ openModal, closeModal, isModalOpen }) => {
+  const { isloding, openSetLoading, closeSetLoading } = useContext(LoadContext);
+
   const [image, setImage] = useState(null);
   const [file, setFile] = useState();
   const [data, setData] = useState({
-    title: "",
-    description: "",
+    name: "",
+    role: "",
+    imageUrl: "",
   });
   const [imageError, setImageError] = useState();
-  const [titleError, setTitleError] = useState();
-  const [descriptionError, setDescriptionError] = useState();
+  const [nameError, setNameError] = useState();
+  const [roleError, setRoleError] = useState();
 
-  const {deleteProject}= useContext(DeleteDataContext)
-  const { projectData, projectDataRetrival } = useContext(DataContext);
-  const {isloding, openSetLoading, closeSetLoading} = useContext(LoadContext)
+  const { trusteeDataRetrival } = useContext(DataContext);
   const handleChange = (e) => {
     try {
       const { name, value } = e.target;
@@ -57,18 +52,6 @@ const EditOurProjects = ({
   const clearImage = () => {
     setImage(null);
   };
-  const setdata = () => {
-    setData({
-      title: ProjectData?.title,
-      description: ProjectData?.description,
-      option: ProjectData?.option,
-      date: ProjectData?.date,
-    });
-    setImage(ProjectData?.imageUrl);
-  };
-  useEffect(() => {
-    setdata();
-  }, []);
   const validate = () => {
     let valid = true;
     if (!image) {
@@ -77,17 +60,17 @@ const EditOurProjects = ({
     } else {
       setImageError("");
     }
-    if (!data.title.trim()) {
-      setTitleError("Enter the title");
+    if (!data.name.trim()) {
+      setNameError("Enter the Name");
       valid = false;
     } else {
-      setTitleError("");
+      setNameError("");
     }
-    if (!data.description.trim()) {
-      setDescriptionError("Enter the description");
+    if (!data.role.trim()) {
+      setRoleError("Enter the role");
       valid = false;
     } else {
-      setDescriptionError("");
+      setRoleError("");
     }
     if (valid) {
       return true;
@@ -95,40 +78,29 @@ const EditOurProjects = ({
       return false;
     }
   };
-  const handleUpdate = async (e) => {
-    const projectDocRef = doc(collection(db, "projects"), ProjectData.id);
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (validate()) {
+        // console.log(data)
         closeModal();
         openSetLoading();
-        if (ProjectData.imageUrl !== image && image) {
-          const banner = ref(storage, "projects/" + data.title);
-          await deleteObject(banner).then((res) => {
-         
+        const banner = ref(storage, "trustee/" + data.name);
+        await uploadBytes(banner, file).then(async (snapshot) => {
+          await getDownloadURL(snapshot.ref).then((downloadUrl) => {
+            data.imageUrl = downloadUrl;
           });
-          await uploadBytes(banner, file).then(async (snapshot) => {
-            await getDownloadURL(snapshot.ref).then((downloadUrl) => {
-              // console.log(downloadUrl);
-              data.imageUrl = downloadUrl;
-            });
-          });
+        });
 
-          await updateDoc(projectDocRef, {
-            imageUrl: data.imageUrl,
-          });
-        }
-
-        if (
-          ProjectData.title !== data.title ||
-          ProjectData.description !== data.description
-        ) {
-          await updateDoc(projectDocRef, {
-            title: data.title,
-            description: data.description
-          });
-        }
-        await projectDataRetrival();
+        const trusteeRef = doc(collection(db, "trustee"));
+        await setDoc(trusteeRef, {
+          name: data.name,
+          role: data.role,
+          imageUrl: data.imageUrl,
+        });
+        const docId = trusteeRef.id;
+        await updateDoc(trusteeRef, { id: docId });
+        await trusteeDataRetrival();
         closeSetLoading();
       }
     } catch (error) {
@@ -136,13 +108,6 @@ const EditOurProjects = ({
     }
   };
 
-  const handleDelete = async() => {
-    closeModal();
-    openSetLoading();
-    deleteProject(ProjectData)
-    await projectDataRetrival()
-    closeSetLoading();
-  };
   return (
     <>
       <div>
@@ -212,68 +177,60 @@ const EditOurProjects = ({
                 </div>
               </div>
 
-              <div className="flex flex-col w-full my-5 md:mx-5 mx-0">
+              <div className="flex flex-col w-full md:mx-5 mx-0">
                 <div className="relative">
                   <input
                     type="text"
-                    id="title"
+                    id="name"
                     className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
-                    placeholder="Title"
+                    placeholder="Name"
                     minLength={4}
-                    name="title"
-                    value={data.title}
+                    name="name"
+                    value={data.name}
                     onChange={handleChange}
                     required
                   />
                   <label
-                    htmlFor="title"
+                    htmlFor="name"
                     className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[50%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                   >
-                    Title
+                    Name
                   </label>
                 </div>
-                {titleError && (
-                  <p className="text-red-600 text-sm mx-1">{titleError}</p>
+                {nameError && (
+                  <p className="text-red-600 text-sm mx-1">{nameError}</p>
                 )}
                 <div className="relative mt-4">
-                  <textarea
-                    id="description"
+                  <input
+                    type="text"
+                    id="role"
                     className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
-                    placeholder="Description"
+                    placeholder="Role"
                     minLength={4}
-                    rows={6}
-                    name="description"
-                    value={data.description}
+                    name="role"
+                    value={data.role}
                     onChange={handleChange}
-                    style={{ resize: "none" }}
                     required
                   />
                   <label
-                    htmlFor="description"
-                    className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[15%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                    htmlFor="role"
+                    className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[50%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                   >
-                    Description
+                    Role
                   </label>
+                  
                 </div>
-                {descriptionError && (
-                  <p className="text-sm text-red-600 mx-1">
-                    {descriptionError}
-                  </p>
+                {roleError && (
+                  <p className="text-sm text-red-600 mx-1">{roleError}</p>
                 )}
               </div>
             </div>
             <div className="flex flex-row md:justify-end justify-between items-end">
               <button
-                className="mx-3 border-double border-[3px] border-red-500 hover:border-slate-200 hover:bg-red-600 hover:text-white px-4 py-2  text-black rounded-md"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-              <button
                 className="mx-3 bg-orange-500 px-5 py-[11px] hover:bg-orange-600 text-white rounded-md"
-                onClick={handleUpdate}
+                onClick={handleSubmit}
               >
-                Update
+                Publish
               </button>
             </div>
           </form>
@@ -283,4 +240,4 @@ const EditOurProjects = ({
   );
 };
 
-export default EditOurProjects;
+export default AddTrustee;

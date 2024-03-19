@@ -9,32 +9,24 @@ import {
 } from "firebase/storage";
 import { doc, collection, setDoc, updateDoc } from "firebase/firestore";
 import { storage, db } from "../../../../Components/Firebase/Firebase";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import DataContext from "../../../../Context/FetchData/DataContext";
 import DeleteDataContext from "../../../../Context/DeleteData/DeleteDataContext";
 import LoadContext from "../../../../Context/LoadingAnimation/LoadingContext";
-const EditCertificate = ({
-  openModal,
-  closeModal,
-  isModalOpen,
-  CertificateData,
-}) => {
-
+const EditTrustee = ({ openModal, closeModal, isModalOpen, TrusteeData }) => {
   const [image, setImage] = useState(null);
   const [file, setFile] = useState();
   const [data, setData] = useState({
-    title: "",
-    description: "",
-    option: "",
-    date: "",
+    name: "",
+    role: "",
   });
   const [imageError, setImageError] = useState();
-  const [titleError, setTitleError] = useState();
-  const [descriptionError, setDescriptionError] = useState();
-  const [dateError, setDateError] = useState();
+  const [nameError, setNameError] = useState();
+  const [roleError, setRoleError] = useState();
 
-  const { isloading, openSetLoading, closeSetLoading } = useContext(LoadContext);
-  const { certificateDataRetrival } = useContext(DataContext);
-  const {deleteCertificate} = useContext(DeleteDataContext)
+  const { deleteTrustee } = useContext(DeleteDataContext);
+  const { trusteeData, trusteeDataRetrival } = useContext(DataContext);
+  const { isloding, openSetLoading, closeSetLoading } = useContext(LoadContext);
   const handleChange = (e) => {
     try {
       const { name, value } = e.target;
@@ -43,13 +35,11 @@ const EditCertificate = ({
         [name]: value,
       }));
       validate();
-      if (name === "date") {
-        setDateError("");
-      }
     } catch (error) {
       alert(error);
     }
   };
+
   const handleImageUpload = (event) => {
     let temp = event.target.files[0];
     setFile(event.target.files[0]);
@@ -63,19 +53,16 @@ const EditCertificate = ({
       setImageError("");
     }
   };
+
   const clearImage = () => {
     setImage(null);
   };
-
   const setdata = () => {
     setData({
-      title: CertificateData?.title,
-      description: CertificateData?.description,
-      option: CertificateData?.option,
-      date: CertificateData?.date,
+      name: TrusteeData?.name,
+      role: TrusteeData?.role,
     });
-    setImage(CertificateData?.imageUrl);
-    console.log(data.title)
+    setImage(TrusteeData?.imageUrl);
   };
   useEffect(() => {
     setdata();
@@ -88,23 +75,17 @@ const EditCertificate = ({
     } else {
       setImageError("");
     }
-    if (!data.title.trim()) {
-      setTitleError("Enter the title");
+    if (!data.name.trim()) {
+      setNameError("Enter the name");
       valid = false;
     } else {
-      setTitleError("");
+      setNameError("");
     }
-    if (!data.description.trim()) {
-      setDescriptionError("Enter the description");
+    if (!data.role.trim()) {
+      setRoleError("Enter the role");
       valid = false;
     } else {
-      setDescriptionError("");
-    }
-    if (!data.date.toString().trim()) {
-      setDateError("Choose date");
-      valid = false;
-    } else {
-      setDateError("");
+      setRoleError("");
     }
     if (valid) {
       return true;
@@ -113,52 +94,34 @@ const EditCertificate = ({
     }
   };
   const handleUpdate = async (e) => {
-    const certificateDocRef = doc(
-      collection(db, "certificate"),
-      CertificateData.id
-    );
+    const trusteeDocRef = doc(collection(db, "trustee"), TrusteeData.id);
     e.preventDefault();
     try {
       if (validate()) {
         closeModal();
         openSetLoading();
-        if (CertificateData.imageUrl !== image && image) {
-          const banner = ref(storage, "certificate/" + data.title);
-          try{
-             await deleteObject(banner).then((res) => {
-            console.log("Image Deleted" + res);
-            alert("Image Deleted");
-          });
+        if (TrusteeData.imageUrl !== image && image) {
+          const banner = ref(storage, "trustee/" + data.name);
+          await deleteObject(banner).then((res) => {});
           await uploadBytes(banner, file).then(async (snapshot) => {
             await getDownloadURL(snapshot.ref).then((downloadUrl) => {
-              console.log(downloadUrl);
+              // console.log(downloadUrl);
               data.imageUrl = downloadUrl;
             });
-          });await updateDoc(certificateDocRef, {
+          });
+
+          await updateDoc(trusteeDocRef, {
             imageUrl: data.imageUrl,
           });
-          }catch (error) {
-            console.log(error)
-          }
-         
-
-          
         }
 
-        if (
-          CertificateData.title !== data.title ||
-          CertificateData.description !== data.description ||
-          CertificateData.date !== data.date ||
-          CertificateData.option !== data.option
-        ) {
-          await updateDoc(certificateDocRef, {
-            title: data.title,
-            description: data.description,
-            option: data.option,
-            date: data.date,
+        if (TrusteeData.name !== data.name || TrusteeData.role !== data.role) {
+          await updateDoc(trusteeDocRef, {
+            name: data.name,
+            role: data.role,
           });
         }
-        await certificateDataRetrival();
+        await trusteeDataRetrival();
         closeSetLoading();
       }
     } catch (error) {
@@ -169,33 +132,32 @@ const EditCertificate = ({
   const handleDelete = async () => {
     closeModal();
     openSetLoading();
-    deleteCertificate(CertificateData);
-    await certificateDataRetrival();
+    deleteTrustee(TrusteeData);
+    await trusteeDataRetrival();
     closeSetLoading();
-  }
+  };
   return (
     <>
-      <div className="">
+      <div>
         <Modal isOpen={isModalOpen} onClose={closeModal}>
           <form className="">
             <div className="flex md:flex-row flex-col justify-center items-center">
-              <div className="flex items-center justify-center xl:w-[60%] w-full md:my-0 my-4 px-5 relative -z-0">
+              <div className="flex items-center justify-center xl:w-[45%] w-full md:my-0 my-4 px-5">
                 <div className="flex flex-col justify-center items-center w-full">
                   <label
                     htmlFor="dropzone-file"
-                    className="flex flex-col items-center justify-center w-full h-[15rem] border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-slate-200 hover:bg-white py-3"
+                    className="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-400 border-dashed rounded-lg cursor-pointer bg-slate-200  hover:bg-slate-100 transition-all ease-in-out duration-300 relative hover:border-gray-500 "
                   >
                     {image ? (
                       <>
                         <img
                           src={image}
                           alt="Uploaded"
-                          className="h-52 md:w-48 object-cover rounded-lg py-2"
+                          className="h-full  object-cover py-2"
                         />
-                        <div className="bg-gray-400 absolute -top-2 right-2 p-1 rounded-full z-10">
+                        <div className=" absolute -top-2 -right-2 bg-slate-300 border-2 border-gray-400 p-1 rounded-full text-xl">
                           <IoClose
                             className="text-red-700 "
-                            size={15}
                             onClick={clearImage}
                           />
                         </div>
@@ -233,8 +195,8 @@ const EditCertificate = ({
                       id="dropzone-file"
                       type="file"
                       className="hidden"
+                      accept="image/*"
                       onChange={handleImageUpload}
-                      required
                     />
                   </label>
                   {imageError && (
@@ -243,71 +205,67 @@ const EditCertificate = ({
                 </div>
               </div>
 
-              <div className="flex flex-col w-full my-5 md:mx-5 mx-0">
+              <div className="flex flex-col w-full md:my-0 md:mx-5 my-5 mx-0">
                 <div className="relative">
                   <input
                     type="text"
-                    id="firstname"
-                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
-                    placeholder="Title"
+                    id="name"
+                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
+                    placeholder="Name"
                     minLength={4}
-                    value={data.title}
-                    name="title"
+                    name="name"
+                    value={data?.name}
                     onChange={handleChange}
                     required
                   />
                   <label
-                    htmlFor="firstname"
+                    htmlFor="name"
                     className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[50%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                   >
-                    Title
+                    Name
                   </label>
                 </div>
-                {titleError && (
-                  <p className="text-red-600 text-sm mx-1">{titleError}</p>
+                {nameError && (
+                  <p className="text-red-600 text-sm mx-1">{nameError}</p>
                 )}
                 <div className="relative mt-2">
-                  <textarea
-                    id="description"
-                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500"
-                    placeholder="Description"
+                  <input
+                    type="text"
+                    id="role"
+                    className="block w-full px-2.5 py-2.5 text-sm bg-transparent rounded-lg border-2 border-gray-400 text-black hover:shadow-sm bg-slate-200 hover:shadow-slate-200 focus:outline-none focus:ring-0 focus:border-orange-600 peer hover:border-orange-600   dark:hover:border-gray-500 dark:focus:border-orange-600 peer-hover:shadow-orange-500 peer-focus:shadow-orange-500 "
+                    placeholder="Role"
                     minLength={4}
-                    rows={6}
-                    style={{ resize: "none" }}
-                    value={data.description}
-                    name="description"
+                    name="role"
+                    value={data.role}
                     onChange={handleChange}
                     required
                   />
                   <label
-                    htmlFor="description"
-                    className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[15%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 pointer-events-none"
+                    htmlFor="role"
+                    className="absolute text-sm  text-black  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-slate-200  px-2 peer-focus:px-2 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-[50%] peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1"
                   >
-                    Description
+                    Role
                   </label>
                 </div>
-                {descriptionError && (
-                  <p className="text-sm text-red-600 mx-1">
-                    {descriptionError}
-                  </p>
+                {roleError && (
+                  <p className="text-sm text-red-600 mx-1">{roleError}</p>
                 )}
               </div>
             </div>
-            <div className="flex flex-row md:justify-end justify-center items-end">
+            <div className="flex flex-row md:justify-end justify-between items-end">
               <button
-                className="mx-3 bg-slate-500 px-14 py-2 hover:bg-red-400 text-white rounded-md"
+                className="mx-3 border-double border-[3px] border-red-500 hover:border-slate-200 hover:bg-red-600 hover:text-white px-4 py-2  text-black rounded-md"
                 onClick={handleDelete}
               >
                 Delete
               </button>
               <button
-                className="mx-3 bg-orange-500 px-14 py-2 hover:bg-orange-600 text-white rounded-md"
+                className="mx-3 bg-orange-500 px-5 py-[11px] hover:bg-orange-600 text-white rounded-md"
                 onClick={handleUpdate}
               >
                 Update
               </button>
             </div>
-           
           </form>
         </Modal>
       </div>
@@ -315,4 +273,4 @@ const EditCertificate = ({
   );
 };
 
-export default EditCertificate;
+export default EditTrustee;

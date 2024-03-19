@@ -1,8 +1,10 @@
+
 import "./App.css";
-import Route from "./Routes";
+import ProjectRoutes from "./Utils/Routes";
+
 
 function App() {
-  return <Route/>
+  return <ProjectRoutes/>
 }
 
 export default App;
