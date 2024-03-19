@@ -1,0 +1,190 @@
+@media only screen and (min-width: 350px) and (max-width: 500px){
+
+.subtract-icon {
+  position: relative;
+  width: 318px;
+  height: 201px;
+ 
+}
+.frame-item{
+  display: none;
+}
+.mobile-logo {
+  position: absolute;
+  top: 22px;
+  left: 44px;
+  width: 28px;
+  height: 13px;
+  object-fit: cover;
+}
+.tablet-logo{
+  display: none;
+}
+.shagun-public-charitable1 {
+  position: absolute;
+    top: -6px;
+    left: -399px;
+    font-size: 10px;
+    line-height: 29.12px;
+    font-weight: 600;
+    color: #2f2e2e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1160px;
+    height: 84px;
+}
+.certificate-of-appreciation1 {
+  position: absolute;
+  top: 42px;
+  left: -400px;
+  font-size: 11px;
+  line-height: 25px;
+  display: inline-block;
+  color: #fd7b23;
+  width: 1160px;
+}
+.is-awarded-to1 {
+  position: absolute;
+    top: 54px;
+    left: -399px;
+    font-size: 10px;
+    line-height: 40px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1161px;
+}
+.span1 {
+  font-weight: 600;
+}
+.donors-name1 {
+  font-size: 12px;
+  font-family: var(--font-lora);
+}
+.donors-name1,.span2 {
+  font-weight: 600;
+}
+.span3{
+  display: none;
+}
+.span4{
+  margin-right: -105px;
+  margin-bottom: -38px;
+  font-weight: 300;
+}
+.span5{
+  margin-left: -215px;
+  margin-bottom: -17px;
+  font-weight: 300;
+}
+.donors-name-1 {
+  position: absolute;
+  top: 78px;
+  left: -305px;
+  line-height: 40px;
+  display: inline-block;
+  width: 979px;
+  font-size: 12px;
+  font-family: var(--font-roboto-serif);
+}
+.in-appreciation-for1,
+.in-the-support1,
+.we-express-our1 {
+  margin: 0;
+}
+.in-appreciation-for-container1 {
+  position: absolute;
+  top: 128px;
+  font-size: 6px;
+  left: calc(50% - 595.5px);
+  line-height: 8px;
+  font-weight: 500;
+  display: inline-block;
+  width: 1183px;
+  height: 145px;
+}
+.frame-inner {
+  width: 218px;
+  position: relative;
+  height: 0;
+  object-fit: contain;
+}
+.date {
+  position: absolute;
+  top: 15px;
+  left: -25px;
+  font-size: 9px;
+  line-height: 15px;
+}
+.date-wrapper {
+  width: 76px;
+  position: relative;
+  height: 30px;
+  left:-64px
+}
+
+.line-parent {
+  position: absolute;
+  bottom: 14px;
+  left: 97px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--gap-2xl);
+} 
+.line-icon {
+  width: 218px;
+  position: relative;
+  height: 0;
+  object-fit: contain;
+}
+.signature {
+  position: absolute;
+  top: 9px;
+  font-size: 9px;
+  left: -48px;
+  line-height: 29.12px;
+}
+.signature-wrapper {
+  width: 30px;
+  position: relative;
+  height: 1px;
+  left: 89px;
+}
+
+.line-group {
+  position: absolute;
+  bottom: 42px;
+  left: 97px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2px;
+}
+.rectangle-icon {
+  position: absolute;
+    top: 51px;
+    left: 62px;
+    width: 249px;
+    height: 114px;
+    object-fit: cover;
+
+}
+.subtract-parent {
+  top:218px;
+  bottom: 1-0px;
+  width: 100%;
+  position: relative;
+  background: linear-gradient(#fff, #fff), #fff;
+  height: 201px;
+  overflow: hidden;
+  text-align: center;
+  font-size: var(--font-size-5xl);
+  color: var(--color-black);
+  font-family: var(--font-lora);
+}
+}

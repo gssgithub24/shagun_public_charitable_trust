@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@400;600&display=swap");
+body {
+  margin: 0;
+  line-height: normal;
+}
+:root {
+  /* fonts */
+  --font-lora: Lora;
+  --font-roboto-serif: "Roboto Serif";
+
+  /* font sizes */
+  --font-size-3xl: 22px;
+  --font-size-lg: 18px;
+  --font-size-16xl: 35px;
+  --font-size-2xl: 21px;
+  --font-size-9xl: 28px;
+  --font-size-5xl: 24px;
+
+  /* Colors */
+  --color-darkorange: #fd7b23;
+  --color-black: #000;
+  --color-darkslategray: #2f2e2e;
+
+  /* Gaps */
+  --gap-xl: 20px;
+  --gap-lgi: 19px;
+  --gap-2xs: 11px;
+  --gap-2xl: 21px;
+
+  /* Paddings */
+  --padding-13xl: 32px;
+  --padding-14xl: 33px;
+  --padding-8xl: 27px;
+  --padding-48xl: 67px;
+  --padding-52xl: 71px;
+  --padding-16xl: 35px;
+  --padding-12xl-5: 31.5px;
+  --padding-7xs: 6px;
+  --padding-39xl: 58px;
+  --padding-39xl-5: 58.5px;
+  --padding-7xl: 26px;
+}
