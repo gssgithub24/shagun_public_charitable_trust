@@ -6,15 +6,23 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../Components/Firebase/Firebase";
 import { HashLoader } from "react-spinners";
 import NavigationContext from "../../Context/Navigation/NavigationContext";
+import { useNavigate } from "react-router-dom";
 const NewsAndUpdatesPage = () => {
   const [data, setData] = useState([]);
-  const {scrollToAbout}= useContext(NavigationContext)
+  const { openaboutSection } = useContext(NavigationContext);
   const fetchData = useCallback(async () => {
     const newsCollectionRef = collection(db, "news");
     const newsData = await getDocs(newsCollectionRef);
     console.log(newsData.docs);
     setData(newsData.docs);
   }, []);
+
+  const navigate = useNavigate();
+
+    const scrollToAbout = () => {
+      navigate("/");
+      openaboutSection();
+    };
 
   useEffect(() => {
     fetchData();

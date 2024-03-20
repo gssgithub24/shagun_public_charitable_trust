@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import React from "react";
 import emailjs from "@emailjs/browser";
 import Register from "../../Assets/Images/Register.png";
@@ -9,6 +9,7 @@ import Footer from "../../Components/Footer/Footer";
 // import { collection, doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import './TrusteeRegister.css';
+import NavigationContext from "../../Context/Navigation/NavigationContext";
 
 function TrusteeRegister() {
   const navigate = useNavigate();
@@ -20,6 +21,12 @@ function TrusteeRegister() {
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [email, setEmail] = useState("");
   const form = useRef();
+  const { openaboutSection } = useContext(NavigationContext);
+  const scrollToAbout = () => {
+
+    navigate("/");
+    openaboutSection();
+  };
   const handleRegisterClick = (e) => {
     let valid = true;
     e.preventDefault();
@@ -111,7 +118,7 @@ function TrusteeRegister() {
         <div className="absolute inset-0">
           {" "}
           <div>
-            <Header color={"white"} />
+            <Header color={"white"} scrollToAboutUs={scrollToAbout}/>
           </div>
           <form action="" ref={form} className=" flex justify-center items-center gap-1 " onSubmit={handleRegisterClick}>
             <div className="min-w-full h-[90vh] flex flex-col justify-center items-center  p-3">

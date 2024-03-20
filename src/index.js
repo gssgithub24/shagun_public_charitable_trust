@@ -6,18 +6,21 @@ import reportWebVitals from './reportWebVitals';
 import DataState from './Context/FetchData/DataState';
 import DeleteState from './Context/DeleteData/DeleteState';
 import LoadingState from './Context/LoadingAnimation/LoadingState';
+import NavigationState from './Context/Navigation/NavigationState';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <LoadingState>
-      <DataState>
-        <DeleteState>
-          <App />
-        </DeleteState>
-
-      </DataState></LoadingState>
+      <NavigationState>
+        <DataState>
+          <DeleteState>
+            <App />
+          </DeleteState>
+        </DataState>
+      </NavigationState>
+    </LoadingState>
   </React.StrictMode>
 );
 

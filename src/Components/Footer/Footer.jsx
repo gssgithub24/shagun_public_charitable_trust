@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaArrowRight } from "react-icons/fa";
-function Footer() {
+import NavigationContext from "../../Context/Navigation/NavigationContext";
+import { useLocation, useNavigate } from "react-router-dom";
+function Footer({scrollToAboutUs}) {
+  const navigate = useNavigate();
+  const { openaboutSection } = useContext(NavigationContext);
+  const location = useLocation();
+  const scrollToAbout = () => {
+    if (location.pathname === "/") {
+scrollToAboutUs();
+    } else {
+      navigate("/");
+      openaboutSection();
+    }
+  };
   return (
     <footer className="bg-black w-full ">
       <div className="flex flex-col md:flex-row xl:flex-row text-gray-300 justify-between py-14 px-8 md:px-16 xl:px-16 font-roboto text-sm xl:text-base">
@@ -30,9 +43,12 @@ function Footer() {
         <div className="pt-10 md:pl-3 md:pt-0 xl:pt-0">
           <p>About</p>
           <div className="mt-5  flex flex-col gap-2 text-gray-400">
-            <a href="#" className="hover:text-orange-500">
+            <div
+              className="hover:text-orange-500 cursor-pointer"
+              onClick={scrollToAbout}
+            >
               Charity
-            </a>
+            </div>
             <a href="/trusteeMember" className="hover:text-orange-500">
               Our Team
             </a>
