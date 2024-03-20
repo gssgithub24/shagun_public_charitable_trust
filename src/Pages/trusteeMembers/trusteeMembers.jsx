@@ -2,15 +2,23 @@ import React, { useContext, useEffect } from "react";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import DataContext from "../../Context/FetchData/DataContext";
+import NavigationContext from "../../Context/Navigation/NavigationContext";
+import { useNavigate } from "react-router-dom";
 const PROUD_TRUSTEES_PAGE = () => {
   const { trusteeData, trusteeDataRetrival } = useContext(DataContext);
-  useEffect(()=>{
-    trusteeDataRetrival()
-  })
+  const navigate = useNavigate();
+  const { openaboutSection } = useContext(NavigationContext);
+  const scrollToAbout = () => {
+    navigate("/");
+    openaboutSection();
+  };
+  useEffect(() => {
+    trusteeDataRetrival();
+  });
   return (
     <div className="font-roboto">
       <div className="">
-        <Header color={"black"} />
+        <Header color={"black"} scrollToAboutUs={scrollToAbout} />
       </div>
       <div></div>
       <h1 className="text-2xl font-bold text-center mt-16 mb-4 ">

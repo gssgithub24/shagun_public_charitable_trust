@@ -1,18 +1,30 @@
 import React, { useState } from "react";
-import LoadContext from "./LoadingContext";
+import NavigationContext from "./NavigationContext";
+import { useNavigate } from "react-router-dom";
+
 
 const NavigationState = ({ children }) => {
 
-    const aboutRef = useRef();
-const navigate = useNavigate();
-    const scrollToAbout = () => {
-        navigate('/')
-        if (aboutRef.current) {
-          aboutRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }
+  const [aboutSection, setAboutSection] = useState(false);
+  const openaboutSection = () => {
+    setAboutSection(true);
+  };
+  const closeaboutSection = () => {
+    setAboutSection(false);
+  };
+
+
   return (
-    <LoadContext.Provider value={{ aboutRef ,scrollToAbout}}>{children}</LoadContext.Provider>
+    <NavigationContext.Provider
+      value={{
+        aboutSection,
+        openaboutSection,
+        closeaboutSection,
+        
+      }}
+    >
+      {children}
+    </NavigationContext.Provider>
   );
 };
 

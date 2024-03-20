@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Project from "./Projects/Project";
 import Aboutus from "./About/Aboutus";
 import Welfare from "./Welfare/Welfare";
@@ -14,10 +14,22 @@ import NavigationContext from "../../Context/Navigation/NavigationContext";
 const Home = () => {
   const [color, setColor] = useState("white");
   const {homeLoad} = useContext(LoadContext);
-  const {aboutRef} = useContext(NavigationContext)
+  const {aboutSection,closeaboutSection} = useContext(NavigationContext);
   const aboutUsRef = useRef();
 
+  const scrollAbout = () => {
+    if(aboutSection ===true){
+       if (aboutUsRef.current) {
+         aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
+         closeaboutSection();
+       }
+      
+
+    }
+  }
+  useEffect(() => scrollAbout(), []);
   const scrollToAboutUs = () => {
+
     if (aboutUsRef.current) {
       aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
     }
