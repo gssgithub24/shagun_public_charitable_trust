@@ -8,7 +8,7 @@ const Aboutus = () => {
         About Us
       </div>
 
-      <div className="about-us-containers flex flex-col items-center justify-center mt-10">
+      <div className="about-us-containers flex flex-col items-center gap-5 md:gap-0 justify-center mt-10">
         <Aboutcomponent
           flexDirection={"left"}
           imgSrc={"https://i.ibb.co/kmwXtzB/DSC-3716.jpg"}

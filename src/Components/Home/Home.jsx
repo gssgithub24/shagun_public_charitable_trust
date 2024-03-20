@@ -13,25 +13,37 @@ import LoadContext from "../../Context/LoadingAnimation/LoadingContext";
 import NavigationContext from "../../Context/Navigation/NavigationContext";
 const Home = () => {
   const [color, setColor] = useState("white");
-  const {homeLoad} = useContext(LoadContext);
-  const {aboutSection,closeaboutSection} = useContext(NavigationContext);
+  const { homeLoad } = useContext(LoadContext);
+  const { aboutSection, closeaboutSection ,projectSection} = useContext(NavigationContext);
   const aboutUsRef = useRef();
+  const projectRef = useRef();
 
   const scrollAbout = () => {
-    if(aboutSection ===true){
-       if (aboutUsRef.current) {
-         aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
-         closeaboutSection();
-       }
-      
-
+    if (aboutSection === true) {
+      if (aboutUsRef.current) {
+        aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
+        closeaboutSection();
+      }
     }
-  }
+  };
   useEffect(() => scrollAbout(), []);
   const scrollToAboutUs = () => {
-
     if (aboutUsRef.current) {
       aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const scrollProject = () => {
+    if (projectSection === true) {
+      if (projectRef.current) {
+        projectRef.current.scrollIntoView({ behavior: "smooth" });
+        closeaboutSection();
+      }
+    }
+  };
+  useEffect(() => scrollProject(), []);
+  const scrollToProject = () => {
+    if (projectRef.current) {
+      projectRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
   return (
@@ -43,7 +55,7 @@ const Home = () => {
         <div className="-z-10">
           <Banner />
         </div>
-        <div>
+        <div ref={projectRef}>
           <Project />
         </div>
         <div ref={aboutUsRef}>
@@ -63,7 +75,7 @@ const Home = () => {
             <HashLoader color="#eb9126" />
           </div>
         )}
-        <Footer scrollToAboutUs={scrollToAboutUs} />
+        <Footer scrollToAboutUs={scrollToAboutUs} scrollToProject={scrollToProject}/>
       </div>
     </>
   );

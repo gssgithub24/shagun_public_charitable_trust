@@ -13,7 +13,7 @@ const OurProjectsComponents = ({ data }) => {
   };
 
   return (
-    <div className="h-[25rem] mx-auto w-[22rem] md:w-[85%] xl:w-[23rem] rounded-lg shadow-xl  bg-white bg-opacity-70 flex flex-col  my-5 transform transition-transform hover:scale-105 duration-500 relative ">
+    <div className="h-[25rem] mx-auto w-[21rem] md:w-[23rem] xl:w-[23rem] rounded-lg shadow-xl  bg-white bg-opacity-70 flex flex-col  my-5 transform transition-transform hover:scale-105 duration-500 relative ">
      
       <div className="h-64 w-full bg-white rounded-t-lg overflow-hidden">
         <img

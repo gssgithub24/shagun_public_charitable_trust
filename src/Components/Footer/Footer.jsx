@@ -2,16 +2,25 @@ import React, { useContext } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import NavigationContext from "../../Context/Navigation/NavigationContext";
 import { useLocation, useNavigate } from "react-router-dom";
-function Footer({scrollToAboutUs}) {
+function Footer({ scrollToAboutUs, scrollToProject }) {
   const navigate = useNavigate();
-  const { openaboutSection } = useContext(NavigationContext);
+  const { openaboutSection, openprojectSection } =
+    useContext(NavigationContext);
   const location = useLocation();
   const scrollToAbout = () => {
     if (location.pathname === "/") {
-scrollToAboutUs();
+      scrollToAboutUs();
     } else {
       navigate("/");
       openaboutSection();
+    }
+  };
+  const scrollToProjectSection = () => {
+    if (location.pathname === "/") {
+      scrollToProject();
+    } else {
+      navigate("/");
+      openprojectSection();
     }
   };
   return (
@@ -55,9 +64,9 @@ scrollToAboutUs();
             <a href="/futureprojects" className="hover:text-orange-500">
               Future Projects
             </a>
-            <a href="#" className="hover:text-orange-500">
+            <div className="hover:text-orange-500 cursor-pointer " onClick={scrollToProjectSection}>
               Acommplished Projects
-            </a>
+            </div>
           </div>
         </div>
         <div className="pt-10 md:pl-3 md:pt-0 xl:pt-0">
