@@ -3,7 +3,7 @@ import logo from "../../Assets/Images/SPCT Logo.png";
 import logo_w from "../../Assets/svgs/logo_w.svg";
 import Headercomponent from "./Headercomponent";
 import { useNavigate } from "react-router-dom";
-function Header({ color ,scrollToAboutUs}) {
+function Header({ color, scrollToAboutUs }) {
   const navigate = useNavigate();
 
   console.log(color);
@@ -36,8 +36,7 @@ function Header({ color ,scrollToAboutUs}) {
             <Headercomponent text={"Home"} />
           </div>{" "}
           <div onClick={scrollToAboutUs}>
-
-          <Headercomponent text={"About"}  />
+            <Headercomponent text={"About"} />
           </div>
           <div
             onClick={() => {
@@ -81,7 +80,7 @@ function Header({ color ,scrollToAboutUs}) {
             aria-label="Toggle Menu"
           >
             <div
-              className={`relative flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all bg-slate-700 ring-0 ring-gray-300 hover:ring-8 ${
+              className={`relative flex overflow-hidden items-center justify-center rounded-full w-[50px] h-[50px] transform transition-all  ${
                 isMenuOpen ? "group-focus:ring-4" : "group-focus:ring-0"
               } ring-opacity-30 duration-200 shadow-md`}
             >
@@ -89,21 +88,27 @@ function Header({ color ,scrollToAboutUs}) {
                 className={`flex flex-col justify-between w-[20px] h-[20px] transform transition-all duration-300 origin-center overflow-hidden`}
               >
                 <div
-                  className={`bg-white h-[2px] w-7 transform transition-all duration-300 origin-left ${
+                  className={`${
+                    color === "white" ? "bg-white" : "bg-black"
+                  } h-[2px] w-7 transform transition-all duration-300 origin-left ${
                     isMenuOpen
                       ? "group-focus:translate-x-10"
                       : "group-focus:translate-x-0"
                   }`}
                 ></div>
                 <div
-                  className={`bg-white h-[2px] w-7 rounded transform transition-all duration-300 ${
+                  className={`${
+                    color === "white" ? "bg-white" : "bg-black"
+                  } h-[2px] w-7 rounded transform transition-all duration-300 ${
                     isMenuOpen
                       ? "group-focus:translate-x-10"
                       : "group-focus:translate-x-0"
                   } delay-75`}
                 ></div>
                 <div
-                  className={`bg-white h-[2px] w-7 transform transition-all duration-300 origin-left ${
+                  className={`${
+                    color === "white" ? "bg-white" : "bg-black"
+                  } h-[2px] w-7 transform transition-all duration-300 origin-left ${
                     isMenuOpen
                       ? "group-focus:translate-x-10"
                       : "group-focus:translate-x-0"
@@ -118,14 +123,18 @@ function Header({ color ,scrollToAboutUs}) {
                   } flex w-0 group-focus:w-12`}
                 >
                   <div
-                    className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300 ${
+                    className={`absolute ${
+                      color === "white" ? "bg-white" : "bg-black"
+                    } h-[2px] w-5 transform transition-all duration-500 rotate-0 delay-300 ${
                       isMenuOpen
                         ? "group-focus:rotate-45"
                         : "group-focus:rotate-0"
                     }`}
                   ></div>
                   <div
-                    className={`absolute bg-white h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 ${
+                    className={`absolute ${
+                      color === "white" ? "bg-white" : "bg-black"
+                    } h-[2px] w-5 transform transition-all duration-500 -rotate-0 delay-300 ${
                       isMenuOpen
                         ? "group-focus:-rotate-45"
                         : "group-focus:-rotate-0"
@@ -147,7 +156,9 @@ function Header({ color ,scrollToAboutUs}) {
                 >
                   <Headercomponent text={"Home"} />
                 </div>{" "}
-                <Headercomponent text={"About"} />
+                <div onClick={scrollToAboutUs}>
+                  <Headercomponent text={"About"} />
+                </div>
                 <div
                   onClick={() => {
                     navigate("/newAndUpdates");
@@ -156,10 +167,12 @@ function Header({ color ,scrollToAboutUs}) {
                   <Headercomponent text={"News"} />
                 </div>
                 <div
-                onClick={()=>{
-                  navigate("/trusteeRegister");
-                }}>
-                <Headercomponent text={"Join us"} /></div>
+                  onClick={() => {
+                    navigate("/trusteeRegister");
+                  }}
+                >
+                  <Headercomponent text={"Join us"} />
+                </div>
                 <div
                   onClick={() => {
                     toggleMenu();
