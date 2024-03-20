@@ -21,7 +21,7 @@ const OurProjectsComponents = ({
     }
   };
   return (
-    <div className="h-[25rem] mx-auto w-[90%] md:w-[85%] xl:w-[23rem] rounded-lg shadow-xl  bg-white bg-opacity-70 flex flex-col  my-5 transform transition-transform hover:scale-105 duration-500 relative ">
+    <div className="h-[25rem] mx-auto w-[23rem] md:w-[85%] xl:w-[23rem] rounded-lg shadow-xl  bg-white bg-opacity-70 flex flex-col  my-5 transform transition-transform hover:scale-105 duration-500 relative ">
       <div
         className="absolute top-1 right-1 text-gray-400 hover:text-gray-200 z-30 border-2 border-transparent p-1 hover:border-gray-500  rounded-full  "
         onClick={handleClick}

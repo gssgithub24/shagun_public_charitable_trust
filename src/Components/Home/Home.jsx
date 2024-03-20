@@ -58,10 +58,12 @@ const Home = () => {
         <div>
           <Certificate />
         </div>
-        {homeLoad&&<div className=" inset-0 bg-opacity-65 w-full h-full fixed flex justify-center items-center bg-black">
-          <HashLoader color="#eb9126" />
-        </div>}
-        <Footer />
+        {homeLoad && (
+          <div className=" inset-0 bg-opacity-65 w-full h-full fixed flex justify-center items-center bg-black">
+            <HashLoader color="#eb9126" />
+          </div>
+        )}
+        <Footer scrollToAboutUs={scrollToAboutUs} />
       </div>
     </>
   );
