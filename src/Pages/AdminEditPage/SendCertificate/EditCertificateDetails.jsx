@@ -1,7 +1,12 @@
 import { setDashPattern } from "pdf-lib";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import CertificateFrame from "../../../Components/Certificate/CertificateFrame";
+import DataContext from "../../../Context/FetchData/DataContext";
 
 const EditCertificateDetails = () => {
+  const {setCertificateGenerateDataHandler} = useContext(DataContext);
+  const navigate = useNavigate();
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -51,8 +56,10 @@ const EditCertificateDetails = () => {
       return false;
     }
   };
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (validate) {
+      await setCertificateGenerateDataHandler(data);
+      navigate("/certificate")
     }
   };
   return (
@@ -103,11 +110,11 @@ const EditCertificateDetails = () => {
                   >
                     Email
                   </label>
-                </div>{emailError && (
-                <p className="text-red-600 text-sm mx-1">{emailError}</p>
-              )}
+                </div>
+                {emailError && (
+                  <p className="text-red-600 text-sm mx-1">{emailError}</p>
+                )}
               </div>
-              
             </div>
             <div className="flex w-full  px-10 gap-10 justify-center ">
               <div className=" w-[45%] ">
@@ -128,7 +135,7 @@ const EditCertificateDetails = () => {
               <div className="flex flex-row  justify-end  w-[45%]">
                 <button
                   className=" bg-orange-500 px-14 py-2 hover:bg-orange-600 text-white rounded-md"
-                  // onClick={}
+                  onClick={handleSubmit}
                 >
                   Submit
                 </button>

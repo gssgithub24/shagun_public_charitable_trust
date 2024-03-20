@@ -29,7 +29,7 @@ const Banner = () => {
         </div>
       </Slider>
       <div className="absolute top-0 bg-opacity-60 bg-black h-[95vh] w-screen">
-        <div className="h-full m-auto flex flex-col justify-center text-white items-center">
+        <div className="h-full m-auto flex flex-col justify-center text-white items-center mt-20">
           <p className="text-5xl font-bold  font-roboto ">
             BECAUSE PEOPLE MATTERS
           </p>

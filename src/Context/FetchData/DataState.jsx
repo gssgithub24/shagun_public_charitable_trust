@@ -8,6 +8,24 @@ function DataState(props) {
   const [projectData, setProjectData] = useState([]);
   const [certificateData, setCertificateData] = useState([]);
   const [trusteeData, setTrusteeData] = useState([]);
+  const [certificateGenerateData, setCertificateGenerateData] = useState({
+    name: "",
+    email: "",
+    date: new Date().toISOString().slice(0, 10),
+  });
+  const setCertificateGenerateDataHandler = (data) => {
+    certificateGenerateData.name = data.name;
+    certificateGenerateData.email = data.email;
+    certificateGenerateData.date = data.date;
+  };
+
+  const removeGenerateCertificateData = () => {
+    setCertificateGenerateData({
+      name: null,
+      email: null,
+      date: null,
+    });
+  };
   const newsDataRetrival = async () => {
     console.log("Start");
     const q = query(collection(db, "news"));
@@ -60,7 +78,10 @@ function DataState(props) {
         certificateData,
         certificateDataRetrival,
         trusteeData,
-        trusteeDataRetrival
+        trusteeDataRetrival,
+        removeGenerateCertificateData,
+        setCertificateGenerateDataHandler,
+        certificateGenerateData,
       }}
     >
       {props.children}

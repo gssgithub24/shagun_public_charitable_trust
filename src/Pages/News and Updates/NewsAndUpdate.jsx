@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import NewsAndUpdatesContainer from "./NewsAndUpdatesContainer";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../Components/Firebase/Firebase";
 import { HashLoader } from "react-spinners";
+import NavigationContext from "../../Context/Navigation/NavigationContext";
 const NewsAndUpdatesPage = () => {
   const [data, setData] = useState([]);
-
+  const {scrollToAbout}= useContext(NavigationContext)
   const fetchData = useCallback(async () => {
     const newsCollectionRef = collection(db, "news");
     const newsData = await getDocs(newsCollectionRef);
@@ -22,7 +23,7 @@ const NewsAndUpdatesPage = () => {
   return (
     <>
       <div>
-        <Header />
+        <Header scrollToAboutUs={scrollToAbout}/>
       </div>
       <div className="py-12">
         <div className="flex justify-center md:py-6 pt-4">

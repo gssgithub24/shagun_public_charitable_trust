@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import React from "react";
+import emailjs from "@emailjs/browser";
 import Register from "../../Assets/Images/Register.png";
 import Header from "../../Components/Header/Header";
 import Footer from "../../Components/Footer/Footer";
@@ -18,6 +19,7 @@ function TrusteeRegister() {
   const [lastNameError, setLastNameError] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [email, setEmail] = useState("");
+  const form = useRef();
   const handleRegisterClick = (e) => {
     let valid = true;
     e.preventDefault();
@@ -42,29 +44,24 @@ function TrusteeRegister() {
     }
 
     if (valid) {
-      alert('Trustee Register not supported yet')
-      // createUserWithEmailAndPassword(auth, email, password)
-      //   .then(async (userCredential) => {
-      //     updateProfile(auth.currentUser, {
-      //       displayName: firstName + " " + lastName,
-      //     });
-      //     const userDocRef = doc(collection(db, "trustee"), auth.currentUser.uid);
-      //     await setDoc(userDocRef, {
-      //       id: userCredential.user.uid,
-      //       firstName,
-      //       lastName,
-      //       email,
-      //       phoneNumber,
-      //     });
-      //     alert("Successfully created an account...");
-      //     navigate("/login");
-      //   })
-      //   .catch((error) => {
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     alert(errorMessage);
-      //     // ..
-      //   });
+       emailjs.sendForm(
+         "service_5kz11dt",
+         "template_q0075i1",
+         form.current,
+         "ObhHfe1Df4j6q2SM0"
+       ).then(
+          (result) => {
+
+            if (result.status == 200) {
+              alert("Email sent successfully");
+            } else {
+              alert("There might be some issue");
+            }
+          },
+          (error) => {
+            alert(error.text);
+           
+          });
       
     }
   };
@@ -116,7 +113,7 @@ function TrusteeRegister() {
           <div>
             <Header color={"white"} />
           </div>
-          <form action="" className=" flex justify-center items-center gap-1 ">
+          <form action="" ref={form} className=" flex justify-center items-center gap-1 " onSubmit={handleRegisterClick}>
             <div className="min-w-full h-[90vh] flex flex-col justify-center items-center  p-3">
               <div className="md:w-[60%] w-full my-8 border-[1.5px] border-orange-500 md:p-20 p-14 md:px-14 px-5 bg-black bg-opacity-70 inset-0 rounded-2xl shadow-lg shadow-orange-500/50">
                 <div className="flex xl:flex-row flex-col justify-between gap-5">
@@ -129,6 +126,7 @@ function TrusteeRegister() {
                         placeholder="First name"
                         minLength={4}
                         value={firstName}
+                        name="firstname"
                         onChange={handleFirstName}
                         required
                       />
@@ -155,6 +153,7 @@ function TrusteeRegister() {
                         placeholder="Last name"
                         minLength={4}
                         value={lastName}
+                        name="lastname"
                         onChange={handleLastName}
                         required
                       />
@@ -181,6 +180,7 @@ function TrusteeRegister() {
                       className="block  px-2.5 pb-2.5 pt-2.5  w-full text-sm  bg-transparent rounded-lg border-2 border-gray-400 appearance-none text-white hover:border-white hover:shadow-sm hover:shadow-slate-200 group  focus:outline-none placeholder-transparent focus:ring-0 focus:border-orange-600 peer focus:hover:shadow-orange-500 "
                       placeholder="Email ID"
                       onChange={handleEmailChange}
+                      name="EmailId"
                       required
                     />
                     <label
@@ -216,6 +216,7 @@ function TrusteeRegister() {
                     <div className="relative w-full ">
                       <input
                         type="number"
+                        name="MobileNo"
                         id="mobileNo"
                         className="block  px-2.5 pb-2.5 pt-2.5  w-full text-sm  bg-transparent rounded-lg border-2 border-gray-400 appearance-none text-white hover:border-white hover:shadow-sm hover:shadow-slate-200 group  focus:outline-none placeholder-transparent focus:ring-0 focus:border-orange-600 peer focus:hover:shadow-orange-500 "
                         placeholder="Mobile Number"

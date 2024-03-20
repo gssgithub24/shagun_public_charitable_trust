@@ -64,14 +64,14 @@ function Project() {
       </div>
       <div className="xl:px-5 xl:mx-20  h-[30rem]">
         <div
-          className=" flex overflow-x-scroll gap-10"
+          className=" flex justify-center overflow-x-scroll gap-10"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}
         >
           {/* <Slider {...settings} className=""> */}
           {projectData.map((data, index) => (
-            <div key={index} className="flex flex-row mr-4">
+            <div key={index} className="flex flex-row  mr-4">
               <ProjectComponent
                 key={index}
                 className="hover:scale-110"

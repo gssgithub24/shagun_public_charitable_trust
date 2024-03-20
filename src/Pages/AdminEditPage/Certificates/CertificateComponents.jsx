@@ -9,28 +9,35 @@ import LoadContext from "../../../Context/LoadingAnimation/LoadingContext";
 const CertificateComponent = ({
   openEditCertificateModal,
   closeEditCertificateModal,
-  data
+  data,
 }) => {
-
-  const {certificateDataRetrival} = useContext(DataContext)
-  const {isloading, openSetLoading, closeSetLoading} = useContext(LoadContext)
-const {deleteCertificate} = useContext(DeleteDataContext)
-  console.log('data' + data?.title);
+  const { certificateDataRetrival } = useContext(DataContext);
+  const { isloading, openSetLoading, closeSetLoading } =
+    useContext(LoadContext);
+  const { deleteCertificate } = useContext(DeleteDataContext);
+  console.log("data" + data?.title);
   const openImageInNewTab = () => {
     const imageUrl = data?.imageUrl;
     window.open(imageUrl, "_blank");
   };
+  const limitCharacters = (str, maxLength) => {
+    if (str.length > maxLength) {
+      return str.substring(0, maxLength) + "...";
+    } else {
+      return str;
+    }
+  };
 
-  const handleClick = ()=>{
+  const handleClick = () => {
     openEditCertificateModal(data);
-  }
+  };
 
-  const handleDelete = ()=>{
+  const handleDelete = () => {
     openSetLoading();
     deleteCertificate(data);
     certificateDataRetrival();
     closeSetLoading();
-  }
+  };
 
   return (
     <div className="my-10 mx-auto w-[90%] md:w-[85%] xl:w-[90%] rounded-lg shadow-xl relative group bg-white bg-opacity-70 h-fit transform transition-transform hover:scale-105 overflow-hidden duration-1000">
@@ -68,7 +75,7 @@ const {deleteCertificate} = useContext(DeleteDataContext)
           {data?.title}
         </p>
         <p className="font-roboto text-xs md:text-base xl:text-base py-4">
-          {data?.description}
+          {limitCharacters(data?.description,100)}
         </p>
       </div>
     </div>
