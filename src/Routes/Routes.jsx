@@ -6,7 +6,7 @@ import ListedDonationPage from "../Pages/ListedDonationpage/ListedDonationPage";
 import Donation from "../Pages/Donation/Donation";
 import Login from "../Pages/LoginPage/Login";
 import SignUp from "../Pages/SignUpPage/SignUp";
-import FutureProjects from "../Pages/FutureProjectsPage/FutureProjects";
+// import FutureProjects from "../Pages/FutureProjectsPage/FutureProjects";
 import TrusteeRegister from "../Pages/TrusteeRegisterPage/TrusteeRegister";
 import NewsAndUpdatesPage from "../Pages/News and Updates/NewsAndUpdate";
 import AdminEditPage from "../Pages/AdminEditPage/AdminEditPage";
