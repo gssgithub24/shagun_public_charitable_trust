@@ -26,13 +26,9 @@ const AdminEditPage = () => {
     const enteredPassword = prompt("Please enter your password:");
 
     if (enteredPassword?.trim() !== process.env.REACT_APP_PASSWORD) {
-      alert( "not "+enteredPassword)
-      alert("Please enter the correct password"+process.env.REACT_APP_PASSWORD);
       navigate("/access-denied");
       setAuthLoad(true);
     } else {
-      alert("match" + enteredPassword);
-
       setAuthLoad(false);
     }
   };
@@ -50,8 +46,10 @@ const AdminEditPage = () => {
   const [isEditCertificateModalOpen, setEditCertificateModalOpen] =
     useState(false);
   const [isEditTruteeModalOpen, setEditTruteeModalOpen] = useState(false);
-  const [isEditCertificateDetailsModalOpen, setEditCertificateDetailsModalOpen] =
-    useState(false);
+  const [
+    isEditCertificateDetailsModalOpen,
+    setEditCertificateDetailsModalOpen,
+  ] = useState(false);
 
   const [TrusteeData, setTruteeData] = useState();
   const [ProjectData, setProjectData] = useState();
@@ -69,8 +67,10 @@ const AdminEditPage = () => {
   const closeCertificateModal = () => setCertificateModalOpen(false);
   const openTrusteeModal = () => setTrusteeModalOpen(true);
   const closeTrusteeModal = () => setTrusteeModalOpen(false);
-  const openEditCertificateDetailModal =()=> setEditCertificateDetailsModalOpen(true)
-  const closeEditCertificateDetailModal =()=> setEditCertificateDetailsModalOpen(false)
+  const openEditCertificateDetailModal = () =>
+    setEditCertificateDetailsModalOpen(true);
+  const closeEditCertificateDetailModal = () =>
+    setEditCertificateDetailsModalOpen(false);
 
   const openEditProjectModal = (data) => {
     console.log("openEditProjectModal b", isEditProjectModalOpen);
@@ -238,7 +238,6 @@ const AdminEditPage = () => {
           <span className="absolute left-[13rem] w-auto text-white text-xs bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 px-1 py-0.5 rounded-lg">
             Admin Mode
           </span>
-         
         </div>
 
         <div className=" flex justify-center px-4 py-2">
@@ -247,7 +246,6 @@ const AdminEditPage = () => {
 
         <div className="w-full z-0">
           <EditCertificateDetails />
-
         </div>
       </div>
       {isloading && (

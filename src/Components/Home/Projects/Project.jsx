@@ -58,13 +58,13 @@ function Project() {
   const { events } = useDraggable(ref);
 
   return (
-    <div className="min-h-screen py-16">
+    <div className=" py-16">
       <div className="flex mx-auto justify-center font-roboto text-4xl font-bold my-10">
         Our Projects
       </div>
-      <div className="xl:px-5 xl:mx-20  h-[30rem]">
+      <div className=" px-3 xl:px-5 xl:mx-20  h-[30rem]">
         <div
-          className=" flex justify-center overflow-x-scroll gap-10"
+          className=" flex overflow-x-scroll gap-10"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}

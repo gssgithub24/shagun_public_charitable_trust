@@ -260,9 +260,9 @@ function TrusteeRegister() {
           </form>
         </div>
       </div>
-      <div className="">
+      {/* <div className="">
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 }

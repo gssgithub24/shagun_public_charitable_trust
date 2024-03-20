@@ -6,11 +6,18 @@ import { useNavigate } from "react-router-dom";
 const NavigationState = ({ children }) => {
 
   const [aboutSection, setAboutSection] = useState(false);
+  const [projectSection, setProjectSection] = useState(false);
   const openaboutSection = () => {
     setAboutSection(true);
   };
   const closeaboutSection = () => {
     setAboutSection(false);
+  };
+  const openprojectSection = () => {
+    setProjectSection(true);
+  };
+  const closeprojectSection = () => {
+    setProjectSection(false);
   };
 
 
@@ -20,7 +27,7 @@ const NavigationState = ({ children }) => {
         aboutSection,
         openaboutSection,
         closeaboutSection,
-        
+        projectSection,openprojectSection,closeprojectSection,
       }}
     >
       {children}

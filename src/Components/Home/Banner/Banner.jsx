@@ -30,11 +30,11 @@ const Banner = () => {
       </Slider>
       <div className="absolute top-0 bg-opacity-60 bg-black h-[95vh] w-screen">
         <div className="h-full m-auto flex flex-col justify-center text-white items-center mt-20">
-          <p className="text-5xl font-bold  font-roboto ">
+          <p className="text-4xl text-center leading-10  xl:text-5xl font-bold  font-roboto ">
             BECAUSE PEOPLE MATTERS
           </p>
-          <p className="text-3xl mt-8">|| शतहस्त समाहर सहस्रहस्त संकिर ||</p>
-          <p className="text-2xl mt-5 font-roboto ">
+          <p className="text-lg text-center font-bold xl:font-normal xl:text-3xl  mt-8">|| शतहस्त समाहर सहस्रहस्त संकिर ||</p>
+          <p className="text-xl text-center xl:text-2xl mt-5 font-roboto ">
             Earn with hundred hands and donate with thousand hands.
           </p>
         </div>
