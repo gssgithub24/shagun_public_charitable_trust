@@ -56,7 +56,7 @@ const AdminEditPage = () => {
 
   const { isloading, openSetLoading, closeSetLoading } =
     useContext(LoadContext);
-  const [authload, setAuthLoad] = useState(false);
+  const [authload, setAuthLoad] = useState(true);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const openNewsModal = () => setNewsModalOpen(true);
