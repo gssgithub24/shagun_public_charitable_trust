@@ -10,7 +10,7 @@ const Donate = () => {
       <div className="about-us-containers flex flex-col md:flex-row xl:flex-row p-10 gap-32 items-center justify-center ">
         <div className="left text-white text-xs text-center">
           G Pay Account
-         <div className="scanner w-96 h-96 bg-gray-300 flex justify-center items-center mt-2">
+          <div className="scanner w-96 h-96 bg-gray-300 flex justify-center items-center mt-2">
             <img src={qrImg} alt="" />
           </div>
           <div className="details ">
