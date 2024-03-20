@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Project from "./Projects/Project";
 import Aboutus from "./About/Aboutus";
 import Welfare from "./Welfare/Welfare";
@@ -10,14 +10,23 @@ import Footer from "../Footer/Footer";
 import ListedDonationPage from "../../Pages/ListedDonationpage/ListedDonationPage";
 import { HashLoader } from "react-spinners";
 import LoadContext from "../../Context/LoadingAnimation/LoadingContext";
+import NavigationContext from "../../Context/Navigation/NavigationContext";
 const Home = () => {
   const [color, setColor] = useState("white");
   const {homeLoad} = useContext(LoadContext);
+  const {aboutRef} = useContext(NavigationContext)
+  const aboutUsRef = useRef();
+
+  const scrollToAboutUs = () => {
+    if (aboutUsRef.current) {
+      aboutUsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <>
       <div className="relative overflow-x-hidden">
         <div className="z-30 w-screen absolute top-0">
-          <Header color={color} />
+          <Header color={color} scrollToAboutUs={scrollToAboutUs} />
         </div>
         <div className="-z-10">
           <Banner />
@@ -25,7 +34,7 @@ const Home = () => {
         <div>
           <Project />
         </div>
-        <div>
+        <div ref={aboutUsRef}>
           <Aboutus />
         </div>
         <div>

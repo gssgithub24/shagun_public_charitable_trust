@@ -13,7 +13,7 @@ const PROUD_TRUSTEES_PAGE = () => {
         <Header color={"black"} />
       </div>
       <div></div>
-      <h1 className="text-2xl font-bold text-center mt-16 mb-4">
+      <h1 className="text-2xl font-bold text-center mt-16 mb-4 ">
         OUR PROUD TRUSTEES
       </h1>
       <br />
@@ -21,7 +21,6 @@ const PROUD_TRUSTEES_PAGE = () => {
         <div className=" inset-x-0 w-[75%] mx-auto top-0 h-2 bg-gray-400 blur-xl " />
         {trusteeData.map((data, index) => (
           <div className="w-full z-0 relative group sm:w-1/2 md:w-1/3 -10 lg:w-1/4 xl:w-[23%] rounded overflow-hidden mx-4 mb-8 flex flex-col justify-center shadow-2xl shadow-gray-400">
-            
             <div className="h-64 w-full ">
               <img
                 className="w-full h-full"

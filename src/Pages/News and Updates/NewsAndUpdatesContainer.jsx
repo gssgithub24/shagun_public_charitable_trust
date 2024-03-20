@@ -33,7 +33,7 @@ const NewsAndUpdatesContainer = ({ title, description, option, date }) => {
       <div>
         <div className="mt-6 mb-3">
           <div className="container mx-auto xl:flex xl:justify-center block">
-            <div className="xl:w-[33%] w-[90%] h-72 xl:mx-0 mx-auto">
+            <div className="xl:w-[30%] w-[90%] h-72 xl:mx-0 mx-auto">
               <img
                 src={bannersrc}
                 alt=""

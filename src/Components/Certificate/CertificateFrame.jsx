@@ -1,11 +1,26 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import logo from "../../Assets/Images/SPCT Logo.png";
+import DataContext from "../../Context/FetchData/DataContext";
+import { useNavigate } from "react-router-dom";
 
 const CertificateFrame = () => {
   const certificateRef = useRef(null);
+  const { certificateGenerateData, removeGenerateCertificateData } =
+    useContext(DataContext);
+  const navigate = useNavigate();
 
+  const handleCheck = () => {
+    if (certificateGenerateData.name === null) {
+      navigate("/");
+    } else {
+    }
+  };
+
+  useEffect(() => {
+    handleCheck();
+  }, []);
   const generatePDF = () => {
     const element = certificateRef.current;
 
@@ -25,6 +40,10 @@ const CertificateFrame = () => {
 
       // Download PDF
       pdf.save("certificate.pdf");
+      removeGenerateCertificateData();
+setTimeout(() => {
+  navigate("/");
+}, 2000);
     });
   };
 
@@ -54,10 +73,10 @@ const CertificateFrame = () => {
             <div className="text-2xl mt-8 flex gap-10 flex-col items-center justify-center text-left font-roboto-serif relative">
               <div className="flex justify-center flex-col -space-y-5">
                 <div
-                  className="  text-orange-600 tracking-wider text-5xl text-center"
+                  className="  text-orange-600 tracking-wider text-4xl text-center capitalize"
                   style={{ fontFamily: "Lobster" }}
                 >
-                  Justin Devendra Faruqui
+                  {certificateGenerateData.name}
                 </div>
                 <span className="font-semibold">
                   ________________________________________________________________
@@ -81,7 +100,7 @@ const CertificateFrame = () => {
                   className="absolute top-0 right-0 w-full flex justify-center text-orange-600 tracking-widest"
                   style={{ fontFamily: "Lobster" }}
                 >
-                  23-12-2004
+                  {certificateGenerateData.date}
                 </div>
                 <p>____________________</p>
                 <p style={{ fontFamily: "Times New Roman" }}>Date</p>

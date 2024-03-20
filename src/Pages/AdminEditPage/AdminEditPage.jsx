@@ -26,9 +26,13 @@ const AdminEditPage = () => {
     const enteredPassword = prompt("Please enter your password:");
 
     if (enteredPassword?.trim() !== process.env.REACT_APP_PASSWORD) {
+      alert( "not "+enteredPassword)
+      alert("Please enter the correct password"+process.env.REACT_APP_PASSWORD);
       navigate("/access-denied");
       setAuthLoad(true);
     } else {
+      alert("match" + enteredPassword);
+
       setAuthLoad(false);
     }
   };
@@ -56,7 +60,7 @@ const AdminEditPage = () => {
 
   const { isloading, openSetLoading, closeSetLoading } =
     useContext(LoadContext);
-  const [authload, setAuthLoad] = useState(false);
+  const [authload, setAuthLoad] = useState(true);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
   const openNewsModal = () => setNewsModalOpen(true);
@@ -242,7 +246,8 @@ const AdminEditPage = () => {
         </div>
 
         <div className="w-full z-0">
-          <EditCertificateDetails/>
+          <EditCertificateDetails />
+
         </div>
       </div>
       {isloading && (

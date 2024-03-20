@@ -1,6 +1,6 @@
 import React from "react";
 import Aboutcomponent from "./Aboutcomponent";
-
+import child from "../../../Assets/Images/Childs.jpg";
 const Aboutus = () => {
   return (
     <div >
@@ -24,7 +24,7 @@ const Aboutus = () => {
 
         <Aboutcomponent
           flexDirection={"right"}
-          imgSrc={"https://i.ibb.co/kmwXtzB/DSC-3716.jpg"}
+          imgSrc={child}
           textContent={`
           We would load all these goods into a tempo and drive to one end of Mumbai city in the dead of the night. As we drove through town, we would leave a shawl for each person we saw sleeping on a pavement, books next to sleeping children, clothes for those whom we thought would need them. That’s how it all started and thankfully now, we can do much more.
             `}
