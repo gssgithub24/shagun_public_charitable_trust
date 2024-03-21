@@ -64,7 +64,7 @@ function Project() {
       </div>
       <div className=" px-3  h-[30rem]">
         <div
-          className=" flex w-fit mx-auto max-w-[80vw] overflow-x-scroll gap-10"
+          className=" flex w-fit mx-auto max-w-[88vw] md:max-w-[80vw] overflow-x-scroll gap-10"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}
