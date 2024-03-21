@@ -69,7 +69,6 @@ function Project() {
           {...events}
           ref={ref}
         >
-          {/* <Slider {...settings} className=""> */}
           {projectData.map((data, index) => (
             <div key={index} className="flex flex-row  mr-4">
               <ProjectComponent
@@ -79,7 +78,6 @@ function Project() {
               />
             </div>
           ))}
-          {/* </Slider> */}
         </div>
       </div>
     </div>

@@ -7,42 +7,48 @@ import { useNavigate } from "react-router-dom";
 const PROUD_TRUSTEES_PAGE = () => {
   const { trusteeData, trusteeDataRetrival } = useContext(DataContext);
   const navigate = useNavigate();
-  const { openaboutSection } = useContext(NavigationContext);
+  const { openaboutSection ,opendonateSection} = useContext(NavigationContext);
   const scrollToAbout = () => {
     navigate("/");
     openaboutSection();
+  };
+  const scrollToDonate = () => {
+    navigate("/");
+    opendonateSection();
   };
   useEffect(() => {
     trusteeDataRetrival();
   });
   return (
     <div className="font-roboto">
-      <div className="">
-        <Header color={"black"} scrollToAboutUs={scrollToAbout} />
-      </div>
-      <div></div>
-      <h1 className="text-2xl font-bold text-center mt-16 mb-4 ">
-        OUR PROUD TRUSTEES
-      </h1>
-      <br />
-      <div className="flex justify-center flex-wrap  ">
-        <div className=" inset-x-0 w-[75%] mx-auto top-0 h-2 bg-gray-400 blur-xl " />
-        {trusteeData.map((data, index) => (
-          <div className="w-full z-0 relative group sm:w-1/2 md:w-1/3 -10 lg:w-1/4 xl:w-[23%] rounded overflow-hidden mx-4 mb-8 flex flex-col justify-center shadow-2xl shadow-gray-400">
-            <div className="h-64 w-full ">
-              <img
-                className="w-full h-full"
-                src={data?.imageUrl}
-                alt="Alt-Balaji"
-              />
+      <div className="min-h-screen">
+        <div className="">
+          <Header color={"black"} scrollToAboutUs={scrollToAbout} scrollToDonate={scrollToDonate}/>
+        </div>
+
+        <h1 className="text-2xl font-bold text-center mt-16 mb-4 ">
+          OUR PROUD TRUSTEES
+        </h1>
+        <br />
+        <div className="flex justify-center flex-wrap  p-4 ">
+          <div className=" inset-x-0 w-[75%] mx-auto top-0 h-2 bg-gray-400 blur-xl " />
+          {trusteeData.map((data, index) => (
+            <div className="w-full z-0 relative group sm:w-1/2 md:w-1/3 -10 lg:w-1/4 xl:w-[23%] rounded overflow-hidden mx-4 mb-8 flex flex-col justify-center shadow-2xl shadow-gray-400">
+              <div className="h-64 w-full ">
+                <img
+                  className="w-full h-full"
+                  src={data?.imageUrl}
+                  alt="Alt-Balaji"
+                />
+              </div>
+              <div className="px-4 py-2 text-center">
+                <div className="font-bold text-sm mb-1">{data?.name}</div>
+                <br />
+                <p className="text-gray-700 text-sm">{data?.role}</p>
+              </div>
             </div>
-            <div className="px-4 py-2 text-center">
-              <div className="font-bold text-sm mb-1">{data?.name}</div>
-              <br />
-              <p className="text-gray-700 text-sm">{data?.role}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
       <style jsx>{`
