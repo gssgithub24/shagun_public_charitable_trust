@@ -43,7 +43,7 @@ const Certificate = ({
   const { events } = useDraggable(ref);
   return (
     <div
-      className="mx-8 flex space-x-3 overflow-x-scroll "
+      className="mx-auto flex px-2  w-fit max-w-[98vw] md:max-w-[80vw] gap-5 space-x-3 overflow-x-scroll"
       style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
       {...events}
       ref={ref}

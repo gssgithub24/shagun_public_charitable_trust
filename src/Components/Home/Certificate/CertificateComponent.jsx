@@ -22,14 +22,15 @@ const CertificateComponent = ({
   };
 
   return (
-    <div className="my-10 mx-auto w-[90%] md:w-[85%] xl:w-[90%] rounded-lg shadow-xl relative group bg-white bg-opacity-70 h-fit transform transition-transform hover:scale-105 overflow-hidden duration-1000">
-      <div className="min-h-60 h-60 w-96  min-w-96 bg-slate-700 rounded-lg">
+    <div className="my-10 mx-auto rounded-lg shadow-xl relative group bg-white bg-opacity-70 transform transition-transform hover:scale-105 overflow-hidden duration-1000">
+      <div className="h-56 bg-slate-700 rounded-lg flex items-center justify-center">
         <img
           src={data?.imageUrl}
           alt=""
-          className="object-cover w-full h-full rounded-lg"
+          className="h-full w-full object-cover rounded-lg"
         />
       </div>
+
       <div className="absolute  h-full w-full top-0 right-0 rounded-lg flex flex-col justify-end items-start bg-black p-4 text-white transform group-hover:translate-y-0 bg-opacity-90 group-hover:opacity-85 translate-y-80 transition-transform duration-500 ease-in-out ">
         <div className="absolute m-4 flex flex-row gap-3  w-full top-0 right-0 justify-end items-start ">
           <div
@@ -43,7 +44,7 @@ const CertificateComponent = ({
           {data?.title}
         </p>
         <p className="font-roboto text-xs md:text-base xl:text-base py-4">
-          {limitCharacters((data?.description),100)}
+          {limitCharacters(data?.description, 100)}
         </p>
       </div>
     </div>

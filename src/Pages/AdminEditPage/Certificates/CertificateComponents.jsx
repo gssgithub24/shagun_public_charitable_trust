@@ -40,8 +40,8 @@ const CertificateComponent = ({
   };
 
   return (
-    <div className="my-10 mx-auto w-[90%] md:w-[85%] xl:w-[90%] rounded-lg shadow-xl relative group bg-white bg-opacity-70 h-fit transform transition-transform hover:scale-105 overflow-hidden duration-1000">
-      <div className="min-h-60 h-60 w-96  min-w-96 bg-slate-700 rounded-lg">
+    <div className="my-10 mx-auto rounded-lg shadow-xl relative group bg-white bg-opacity-70  transform transition-transform hover:scale-105 overflow-hidden duration-1000">
+      <div className="h-56 bg-slate-700 rounded-lg flex items-center justify-center">
         <img
           src={data?.imageUrl}
           alt=""
