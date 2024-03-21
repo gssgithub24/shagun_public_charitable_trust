@@ -9,7 +9,7 @@ import NavigationContext from "../../Context/Navigation/NavigationContext";
 import { useNavigate } from "react-router-dom";
 const NewsAndUpdatesPage = () => {
   const [data, setData] = useState([]);
-  const { openaboutSection } = useContext(NavigationContext);
+  const { openaboutSection ,opendonateSection} = useContext(NavigationContext);
   const fetchData = useCallback(async () => {
     const newsCollectionRef = collection(db, "news");
     const newsData = await getDocs(newsCollectionRef);
@@ -23,6 +23,10 @@ const NewsAndUpdatesPage = () => {
       navigate("/");
       openaboutSection();
     };
+     const scrollToDonate = () => {
+       navigate("/");
+       opendonateSection();
+     };
 
   useEffect(() => {
     fetchData();
@@ -31,7 +35,7 @@ const NewsAndUpdatesPage = () => {
   return (
     <>
       <div>
-        <Header scrollToAboutUs={scrollToAbout}/>
+        <Header scrollToAboutUs={scrollToAbout} scrollToDonate={scrollToDonate}/>
       </div>
       <div className="py-12">
         <div className="flex justify-center md:py-6 pt-4">

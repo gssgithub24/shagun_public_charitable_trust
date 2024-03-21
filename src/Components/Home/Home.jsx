@@ -14,9 +14,10 @@ import NavigationContext from "../../Context/Navigation/NavigationContext";
 const Home = () => {
   const [color, setColor] = useState("white");
   const { homeLoad } = useContext(LoadContext);
-  const { aboutSection, closeaboutSection ,projectSection} = useContext(NavigationContext);
+  const { aboutSection, closeaboutSection ,projectSection,closeprojectSection,donateSection,closedonateSection} = useContext(NavigationContext);
   const aboutUsRef = useRef();
   const projectRef = useRef();
+  const donateRef = useRef();
 
   const scrollAbout = () => {
     if (aboutSection === true) {
@@ -36,7 +37,7 @@ const Home = () => {
     if (projectSection === true) {
       if (projectRef.current) {
         projectRef.current.scrollIntoView({ behavior: "smooth" });
-        closeaboutSection();
+        closeprojectSection();
       }
     }
   };
@@ -46,11 +47,25 @@ const Home = () => {
       projectRef.current.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const scrollDonate = () => {
+    if (donateSection === true) {
+      if (donateRef.current) {
+        donateRef.current.scrollIntoView({ behavior: "smooth" });
+        closedonateSection();
+      }
+    }
+  };
+  useEffect(() => scrollDonate(), []);
+  const scrollToDonate = () => {
+    if (donateRef.current) {
+      donateRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <>
       <div className="relative overflow-x-hidden">
         <div className="z-30 w-screen absolute top-0">
-          <Header color={color} scrollToAboutUs={scrollToAboutUs} />
+          <Header color={color} scrollToAboutUs={scrollToAboutUs} scrollToDonate={scrollToDonate} />
         </div>
         <div className="-z-10">
           <Banner />
@@ -64,7 +79,7 @@ const Home = () => {
         <div>
           <Welfare />
         </div>
-        <div>
+        <div ref={donateRef}>
           <Donate />
         </div>
         <div>
@@ -75,7 +90,7 @@ const Home = () => {
             <HashLoader color="#eb9126" />
           </div>
         )}
-        <Footer scrollToAboutUs={scrollToAboutUs} scrollToProject={scrollToProject}/>
+        <Footer scrollToAboutUs={scrollToAboutUs} scrollToProject={scrollToProject} scrollToDonate={scrollToDonate}/>
       </div>
     </>
   );

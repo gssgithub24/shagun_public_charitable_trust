@@ -3,7 +3,7 @@ import logo from "../../Assets/Images/SPCT Logo.png";
 import logo_w from "../../Assets/svgs/logo_w.svg";
 import Headercomponent from "./Headercomponent";
 import { useNavigate } from "react-router-dom";
-function Header({ color, scrollToAboutUs }) {
+function Header({ color, scrollToAboutUs, scrollToDonate }) {
   const navigate = useNavigate();
 
   console.log(color);
@@ -52,11 +52,7 @@ function Header({ color, scrollToAboutUs }) {
           >
             <Headercomponent text={"Join us"} />
           </div>
-          <div
-            onClick={() => {
-              navigate("/donation");
-            }}
-          >
+          <div onClick={scrollToDonate}>
             <Headercomponent text={"Donate"} />
           </div>
           <div
