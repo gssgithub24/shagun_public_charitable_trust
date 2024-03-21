@@ -14,7 +14,14 @@ import NavigationContext from "../../Context/Navigation/NavigationContext";
 const Home = () => {
   const [color, setColor] = useState("white");
   const { homeLoad } = useContext(LoadContext);
-  const { aboutSection, closeaboutSection ,projectSection,closeprojectSection,donateSection,closedonateSection} = useContext(NavigationContext);
+  const {
+    aboutSection,
+    closeaboutSection,
+    projectSection,
+    closeprojectSection,
+    donateSection,
+    closedonateSection,
+  } = useContext(NavigationContext);
   const aboutUsRef = useRef();
   const projectRef = useRef();
   const donateRef = useRef();
@@ -65,7 +72,11 @@ const Home = () => {
     <>
       <div className="relative overflow-x-hidden">
         <div className="z-30 w-screen absolute top-0">
-          <Header color={color} scrollToAboutUs={scrollToAboutUs} scrollToDonate={scrollToDonate} />
+          <Header
+            color={color}
+            scrollToAboutUs={scrollToAboutUs}
+            scrollToDonate={scrollToDonate}
+          />
         </div>
         <div className="-z-10">
           <Banner />
@@ -90,7 +101,11 @@ const Home = () => {
             <HashLoader color="#eb9126" />
           </div>
         )}
-        <Footer scrollToAboutUs={scrollToAboutUs} scrollToProject={scrollToProject} scrollToDonate={scrollToDonate}/>
+        <Footer
+          scrollToAboutUs={scrollToAboutUs}
+          scrollToProject={scrollToProject}
+          scrollToDonate={scrollToDonate}
+        />
       </div>
     </>
   );

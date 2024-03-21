@@ -23,13 +23,25 @@ const AdminEditPage = () => {
 
   const handlePasswordPrompt = () => {
     setAuthLoad(true);
-    const enteredPassword = prompt("Please enter your password:");
+    const isMobileOrTablet = /Mobi|Tablet|iPad|Android/.test(
+      navigator.userAgent
+    );
 
-    if (enteredPassword?.trim() !== process.env.REACT_APP_PASSWORD) {
-      navigate("/access-denied");
+    if (isMobileOrTablet) {
+      alert(
+        "Access denied. Please use a desktop device to access this feature."
+      );
       setAuthLoad(true);
+      navigate('/');
     } else {
-      setAuthLoad(false);
+      const enteredPassword = prompt("Please enter your password:");
+
+      if (enteredPassword?.trim() !== process.env.REACT_APP_PASSWORD) {
+        navigate("/access-denied");
+        setAuthLoad(true);
+      } else {
+        setAuthLoad(false);
+      }
     }
   };
 

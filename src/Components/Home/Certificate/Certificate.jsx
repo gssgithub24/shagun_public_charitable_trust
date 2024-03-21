@@ -64,9 +64,9 @@ openHome();
         </p>
       </div>
 
-      <div className="xl:px-16 xl:mx-20 h-[30rem]">
+      <div className=" h-[30rem]">
         <div
-          className="mx-8 flex justify-center space-x-3 overflow-x-scroll "
+          className=" mx-auto flex px-2  w-fit max-w-[98vw] md:max-w-[80vw] gap-5 space-x-3 overflow-x-scroll "
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}

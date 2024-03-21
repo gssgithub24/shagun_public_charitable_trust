@@ -143,7 +143,7 @@ function Header({ color, scrollToAboutUs, scrollToDonate }) {
 
           {isMenuOpen && (
             <div className="absolute w-[60vw] top-0 right-16  z-50">
-              <div className=" flex flex-col rounded-2xl  items-center gap-5 bg-gray-400 py-10 px-10 ">
+              <div className=" flex flex-col rounded-2xl  z-50  items-center gap-5 bg-gray-400 py-10 px-10 ">
                 <div
                   onClick={() => {
                     toggleMenu();

@@ -62,9 +62,9 @@ function Project() {
       <div className="flex mx-auto justify-center font-roboto text-4xl font-bold my-10">
         Our Projects
       </div>
-      <div className=" px-3 xl:px-5 xl:mx-20  h-[30rem]">
+      <div className=" px-3  h-[30rem]">
         <div
-          className=" flex overflow-x-scroll gap-10"
+          className=" flex w-fit mx-auto max-w-[80vw] overflow-x-scroll gap-10"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}
