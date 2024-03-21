@@ -31,7 +31,8 @@ const AdminEditPage = () => {
       alert(
         "Access denied. Please use a desktop device to access this feature."
       );
-      setAuthLoad(false);
+      setAuthLoad(true);
+      navigate('/');
     } else {
       const enteredPassword = prompt("Please enter your password:");
 
