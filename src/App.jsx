@@ -10,7 +10,7 @@ function App() {
     <div className="relative">
       <ProjectRoutes className="z-0" />
 
-      <div className="fixed rounded-full p-4 bg-orange-500 z-50 bottom-10 right-10 cursor-pointer ">
+      <div className="fixed rounded-full p-4 bg-orange-500 z-50 bottom-5 right-5 lg:bottom-10 lg:right-10 cursor-pointer ">
         {!click ? (
           <IoChatboxSharp
             className="font-bold  text-gray-800"
@@ -25,7 +25,7 @@ function App() {
           />
         )}{" "}
         {click && (
-          <div className="absolute rounded-lg h-[35rem] overflow-y-scroll bottom-16 right-14 w-96 bg-slate-200 ">
+          <div className="absolute rounded-lg h-[35rem] overflow-y-scroll right-0 bottom-16 lg:right-14 w-80 lg:w-96 bg-slate-200 ">
             <MessageBox />
           </div>
         )}

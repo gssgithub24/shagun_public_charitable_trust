@@ -66,18 +66,19 @@ openHome();
 
       <div className=" h-[30rem]">
         <div
-          className=" mx-auto flex px-2  w-fit max-w-[98vw] md:max-w-[80vw] gap-5 space-x-3 overflow-x-scroll "
+          className=" mx-auto flex px-2  w-fit max-w-[98vw] md:max-w-[80vw] gap-5 space-x-3 overflow-x-scroll snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}
         >
-
           {certificateData.map((data, index) => (
-            <div key={index} className="inline-block mr-4">
-            <CertificateComponent key={index} data={data}/>
+            <div
+              key={index}
+              className="inline-block  snap-always snap-center"
+            >
+              <CertificateComponent key={index} data={data} />
             </div>
           ))}
-
         </div>
       </div>
     </div>
