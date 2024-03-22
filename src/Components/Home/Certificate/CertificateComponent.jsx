@@ -22,14 +22,12 @@ const CertificateComponent = ({
   };
 
   return (
-<<<<<<< HEAD
+
     <div className="my-10 mx-auto w-[20.5rem] md:w-[21rem] xl:w-[21rem] rounded-lg shadow-xl relative group bg-white bg-opacity-70 h- transform transition-transform hover:scale-105 overflow-hidden duration-1000">
-=======
-
-    <div className="my-10 mx-auto w-[20.5rem] md:w-[85%] xl:w-[21rem] rounded-lg shadow-xl relative group bg-white bg-opacity-70 h- transform transition-transform hover:scale-105 overflow-hidden duration-1000">
 
 
->>>>>>> 396373df2e6878fe1aa8511d86b6cbe90eb276dc
+
+   
       <div className="h-56 bg-slate-700 rounded-lg flex items-center justify-center">
         <img
           src={data?.imageUrl}
@@ -55,7 +53,7 @@ const CertificateComponent = ({
         </p>
       </div>
     </div>
-           </div>
+          
   );
 };
 
