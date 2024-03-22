@@ -23,27 +23,16 @@ const CertificateFrame = () => {
   }, []);
   const generatePDF = () => {
     const element = certificateRef.current;
-
-    // Get dimensions of the element
     const { offsetWidth, offsetHeight } = element;
-
-    // Generate canvas from HTML element
     html2canvas(element, { scrollY: -window.scrollY }).then((canvas) => {
-      // Create a new PDF document
       const pdf = new jsPDF("l", "px", [offsetWidth, offsetHeight]);
-
-      // Convert canvas to image data URL
       const imgData = canvas.toDataURL("image/png");
-
-      // Add image to PDF
       pdf.addImage(imgData, "PNG", 0, 0, offsetWidth, offsetHeight);
-
-      // Download PDF
       pdf.save("certificate.pdf");
       removeGenerateCertificateData();
-setTimeout(() => {
-  navigate("/");
-}, 2000);
+      setTimeout(() => {
+        navigate("/");
+      }, 2000)
     });
   };
 

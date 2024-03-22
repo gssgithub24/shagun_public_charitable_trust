@@ -83,7 +83,7 @@ function Footer({ scrollToAboutUs, scrollToProject ,scrollToDonate}) {
         </div>
         <div className="pt-10 md:pl-3 md:pt-0 xl:pt-0">
           <p>Quick Link</p>
-          <div className="mt-5 flex flex-col gap-2 text-gray-400">
+          <div className="mt-5 flex flex-col  gap-2 text-gray-400">
             <div
               onClick={scrollToDonateSection}
               className="hover:text-orange-500 cursor-pointer"

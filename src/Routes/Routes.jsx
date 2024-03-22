@@ -17,6 +17,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import CertificateFrame from "../Components/Certificate/CertificateFrame";
 const ProjectRoutes = () => {
   return (
+    
     <React.Suspense fallback={<>Loading...</>}>
       <Router>
         <Routes>
