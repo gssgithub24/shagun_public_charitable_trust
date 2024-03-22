@@ -3,7 +3,7 @@ import React from 'react'
 const Headercomponent = ({text}) => {
   return (
     <ul className="text-base font-roboto relative cursor-pointer group">
-            <li className="relative group-hover:text-orange-500 transition-all duration-150 transform group-hover:-translate-y-1">
+            <li className="relative group-hover:text-orange-300 transition-all duration-150 transform group-hover:-translate-y-1">
               <p className="group-hover:pb-2 transition-all duration-150 ">
                 {text}
               </p>

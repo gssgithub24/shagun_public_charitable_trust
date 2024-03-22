@@ -64,13 +64,16 @@ function Project() {
       </div>
       <div className=" px-3  h-[30rem]">
         <div
-          className=" flex w-fit mx-auto max-w-[88vw] md:max-w-[80vw] overflow-x-scroll gap-10"
+          className=" flex w-fit mx-auto max-w-[88vw] md:max-w-[80vw] overflow-x-scroll gap-10 snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", "-ms-overflow-style": "none" }}
           {...events}
           ref={ref}
         >
           {projectData.map((data, index) => (
-            <div key={index} className="flex flex-row  mr-4">
+            <div
+              key={index}
+              className="flex flex-row   snap-always snap-center"
+            >
               <ProjectComponent
                 key={index}
                 className="hover:scale-110"

@@ -3,6 +3,7 @@ import logo from "../../Assets/Images/SPCT Logo.png";
 import logo_w from "../../Assets/svgs/logo_w.svg";
 import Headercomponent from "./Headercomponent";
 import { useNavigate } from "react-router-dom";
+import { MdClose } from "react-icons/md";
 function Header({ color, scrollToAboutUs, scrollToDonate }) {
   const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ function Header({ color, scrollToAboutUs, scrollToDonate }) {
   return (
     <header className="w-full h-11 sticky top-0 bg-transparent font-roboto">
       <div
-        className={`flex my-4 px-8 justify-between items-center ${
+        className={`flex my-4 px-8 justify-between items-start relative ${
           color === "white" ? "text-white" : "text-black"
         }`}
       >
@@ -69,7 +70,7 @@ function Header({ color, scrollToAboutUs, scrollToDonate }) {
             <span className="relative text-white">Start a fundraise</span>
           </div>
         </div>
-        <div className="lg:hidden relative z-10">
+        <div className="lg:hidden h-screen z-10">
           <button
             className="relative group"
             onClick={toggleMenu}
@@ -140,55 +141,66 @@ function Header({ color, scrollToAboutUs, scrollToDonate }) {
               </div>
             </div>
           </button>
-
-          {isMenuOpen && (
-            <div className="absolute w-[60vw] top-0 right-16  z-50">
-              <div className=" flex flex-col rounded-2xl  z-50  items-center gap-5 bg-gray-400 py-10 px-10 ">
-                <div
-                  onClick={() => {
-                    toggleMenu();
-                    navigate("/");
-                  }}
-                >
-                  <Headercomponent text={"Home"} />
-                </div>{" "}
-                <div onClick={scrollToAboutUs}>
-                  <Headercomponent text={"About"} />
-                </div>
-                <div
-                  onClick={() => {
-                    navigate("/newAndUpdates");
-                  }}
-                >
-                  <Headercomponent text={"News"} />
-                </div>
-                <div
-                  onClick={() => {
-                    navigate("/trusteeRegister");
-                  }}
-                >
-                  <Headercomponent text={"Join us"} />
-                </div>
-                <div
-                  onClick={() => {
-                    toggleMenu();
-                    navigate("/donation");
-                  }}
-                >
-                  <Headercomponent text={"Donate"} />
-                </div>
-                <div
-                  onClick={() => {
-                    toggleMenu();
-                    navigate("/login");
-                  }}
-                >
-                  <Headercomponent text={"Start Fund Raiser"} />
-                </div>
+        </div>
+        {isMenuOpen && (
+          <div
+            className={
+              isMenuOpen
+                ? "fixed right-0 top-0 w-full h-full z-50 0 bg-[#000300] transition-all ease-in-out duration-1000"
+                : "transition-all ease-in-out duration-500 w-0 h-0 fixed right-[-100%]"
+            }
+          >
+            <div className=" flex flex-col h-full  z-50 justify-start  items-start gap-16 bg-gray-400 py-10 px-10 relative">
+              <div
+                className="absolute top-5 right-5 border-2 rounded-lg border-orange-200 text-red-500 p-2 hover:bg-red-500 hover:text-slate-100"
+                onClick={toggleMenu}
+              >
+                <MdClose size={20} />
+              </div>
+              <div
+                onClick={() => {
+                  toggleMenu();
+                  navigate("/");
+                }}
+              >
+                <Headercomponent text={"Home"} />
+              </div>{" "}
+              <div onClick={scrollToAboutUs}>
+                <Headercomponent text={"About"} />
+              </div>
+              <div
+                onClick={() => {
+                  navigate("/newAndUpdates");
+                }}
+              >
+                <Headercomponent text={"News"} />
+              </div>
+              <div
+                onClick={() => {
+                  navigate("/trusteeRegister");
+                }}
+              >
+                <Headercomponent text={"Join us"} />
+              </div>
+              <div
+                onClick={() => {
+                  toggleMenu();
+                  navigate("/donation");
+                }}
+              >
+                <Headercomponent text={"Donate"} />
+              </div>
+              <div
+                onClick={() => {
+                  toggleMenu();
+                  navigate("/login");
+                }}
+              >
+                <Headercomponent text={"Start Fund Raiser"} />
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </header>
   );

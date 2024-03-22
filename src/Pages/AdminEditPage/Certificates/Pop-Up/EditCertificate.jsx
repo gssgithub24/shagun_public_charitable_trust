@@ -18,23 +18,20 @@ const EditCertificate = ({
   isModalOpen,
   CertificateData,
 }) => {
-
   const [image, setImage] = useState(null);
   const [file, setFile] = useState();
   const [data, setData] = useState({
     title: "",
     description: "",
-    option: "",
-    date: "",
   });
   const [imageError, setImageError] = useState();
   const [titleError, setTitleError] = useState();
   const [descriptionError, setDescriptionError] = useState();
-  const [dateError, setDateError] = useState();
 
-  const { isloading, openSetLoading, closeSetLoading } = useContext(LoadContext);
+  const { isloading, openSetLoading, closeSetLoading } =
+    useContext(LoadContext);
   const { certificateDataRetrival } = useContext(DataContext);
-  const {deleteCertificate} = useContext(DeleteDataContext)
+  const { deleteCertificate } = useContext(DeleteDataContext);
   const handleChange = (e) => {
     try {
       const { name, value } = e.target;
@@ -43,9 +40,7 @@ const EditCertificate = ({
         [name]: value,
       }));
       validate();
-      if (name === "date") {
-        setDateError("");
-      }
+
     } catch (error) {
       alert(error);
     }
@@ -71,11 +66,10 @@ const EditCertificate = ({
     setData({
       title: CertificateData?.title,
       description: CertificateData?.description,
-      option: CertificateData?.option,
-      date: CertificateData?.date,
+
     });
     setImage(CertificateData?.imageUrl);
-    console.log(data.title)
+
   };
   useEffect(() => {
     setdata();
@@ -100,12 +94,6 @@ const EditCertificate = ({
     } else {
       setDescriptionError("");
     }
-    if (!data.date.toString().trim()) {
-      setDateError("Choose date");
-      valid = false;
-    } else {
-      setDateError("");
-    }
     if (valid) {
       return true;
     } else {
@@ -124,38 +112,32 @@ const EditCertificate = ({
         openSetLoading();
         if (CertificateData.imageUrl !== image && image) {
           const banner = ref(storage, "certificate/" + data.title);
-          try{
-             await deleteObject(banner).then((res) => {
-            console.log("Image Deleted" + res);
-            alert("Image Deleted");
-          });
-          await uploadBytes(banner, file).then(async (snapshot) => {
-            await getDownloadURL(snapshot.ref).then((downloadUrl) => {
-              console.log(downloadUrl);
-              data.imageUrl = downloadUrl;
+          try {
+            await deleteObject(banner).then((res) => {
+              console.log("Image Deleted" + res);
+              alert("Image Deleted");
             });
-          });await updateDoc(certificateDocRef, {
-            imageUrl: data.imageUrl,
-          });
-          }catch (error) {
-            console.log(error)
+            await uploadBytes(banner, file).then(async (snapshot) => {
+              await getDownloadURL(snapshot.ref).then((downloadUrl) => {
+                console.log(downloadUrl);
+                data.imageUrl = downloadUrl;
+              });
+            });
+            await updateDoc(certificateDocRef, {
+              imageUrl: data.imageUrl,
+            });
+          } catch (error) {
+            console.log(error);
           }
-         
-
-          
         }
 
         if (
           CertificateData.title !== data.title ||
-          CertificateData.description !== data.description ||
-          CertificateData.date !== data.date ||
-          CertificateData.option !== data.option
+          CertificateData.description !== data.description
         ) {
           await updateDoc(certificateDocRef, {
             title: data.title,
             description: data.description,
-            option: data.option,
-            date: data.date,
           });
         }
         await certificateDataRetrival();
@@ -172,7 +154,7 @@ const EditCertificate = ({
     deleteCertificate(CertificateData);
     await certificateDataRetrival();
     closeSetLoading();
-  }
+  };
   return (
     <>
       <div className="">
@@ -307,7 +289,6 @@ const EditCertificate = ({
                 Update
               </button>
             </div>
-           
           </form>
         </Modal>
       </div>
